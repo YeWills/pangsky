@@ -15,6 +15,7 @@
     "compiled"
   ],
   "scripts": {
+    "debug": "pnpm run build && yalc publish",
     "build": "umi-scripts father build",
     "build:deps": "umi-scripts bundleDeps",
     "dev": "umi-scripts father dev",
