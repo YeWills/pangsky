@@ -1,5 +1,4 @@
 import * as logger from '@pangskyjs/utils/src/logger';
-import { existsSync } from 'fs';
 import getGitRepoInfo from 'git-repo-info';
 import { join } from 'path';
 import rimraf from 'rimraf';
@@ -18,12 +17,6 @@ import { assert, eachPkg, getPkgs } from './.internal/utils';
   const isGitClean = (await $`git status --porcelain`).stdout.trim().length;
   assert(!isGitClean, 'git status is not clean');
 
-  // // check git remote update
-  // logger.event('check git remote update');
-  // await $`git fetch`;
-  // const gitStatus = (await $`git status --short --branch`).stdout.trim();
-  // assert(!gitStatus.includes('behind'), `git status is behind remote`);
-
   // check npm registry
   logger.event('check npm registry');
   const registry = (await $`npm config get registry`).stdout.trim();
@@ -37,24 +30,6 @@ import { assert, eachPkg, getPkgs } from './.internal/utils';
   const changed = (await $`lerna changed --loglevel error`).stdout.trim();
   assert(changed, `no package is changed`);
 
-  // // check npm ownership
-  // logger.event('check npm ownership');
-  // const whoami = (await $`npm whoami`).stdout.trim();
-  // await Promise.all(
-  //   ['umi', '@umijs/core'].map(async (pkg) => {
-  //     const owners = (await $`npm owner ls ${pkg}`).stdout
-  //       .trim()
-  //       .split('\n')
-  //       .map((line) => {
-  //         return line.split(' ')[0];
-  //       });
-  //     assert(owners.includes(whoami), `${pkg} is not owned by ${whoami}`);
-  //   }),
-  // );
-
-  // check package.json
-  logger.event('check package.json info');
-  await $`npm run check:packageFiles`;
 
   // clean
   logger.event('clean');
@@ -68,15 +43,12 @@ import { assert, eachPkg, getPkgs } from './.internal/utils';
   await $`npm run build:release`;
   // await $`npm run build:extra`;
   //
-  // logger.event('check client code change');
-  // const isGitCleanAfterClientBuild = (
-  //   await $`git status --porcelain`
-  // ).stdout.trim().length;
-  // assert(!isGitCleanAfterClientBuild, 'client code is updated');
+  logger.event('check client code change');
+  const isGitCleanAfterClientBuild = (
+    await $`git status --porcelain`
+  ).stdout.trim().length;
+  assert(!isGitCleanAfterClientBuild, 'client code is updated');
 
-  // generate changelog
-  // TODO
-  logger.event('generate changelog');
 
   // bump version
   logger.event('bump version');
@@ -100,20 +72,19 @@ import { assert, eachPkg, getPkgs } from './.internal/utils';
   await $`pnpm i`;
   $.verbose = true;
 
-  //todo
-  // // commit
-  // logger.event('commit');
-  // await $`git commit --all --message "release: ${version}"`;
+  // commit
+  logger.event('commit');
+  await $`git commit --all --message "release: ${version}"`;
 
-  // // git tag
-  // if (tag !== 'canary') {
-  //   logger.event('git tag');
-  //   await $`git tag v${version}`;
-  // }
+  // git tag
+  if (tag !== 'canary') {
+    logger.event('git tag');
+    await $`git tag v${version}`;
+  }
 
-  // // git push
-  // logger.event('git push');
-  // await $`git push origin ${branch} --tags`;
+  // git push
+  logger.event('git push');
+  await $`git push origin ${branch} --tags`;
 
   // npm publish
   logger.event('pnpm publish');
@@ -122,22 +93,22 @@ import { assert, eachPkg, getPkgs } from './.internal/utils';
 
   // check 2fa config
   let otpArg: string[] = [];
-  if (
-    (await $`npm profile get "two-factor auth"`).toString().includes('writes')
-  ) {
-    let code = '';
-    do {
-      // get otp from user
-      code = await question('This operation requires a one-time password: ');
-      // generate arg for zx command
-      // why use array? https://github.com/google/zx/blob/main/docs/quotes.md
-      otpArg = ['--otp', code];
-    } while (code.length !== 6);
-  }
+  // if (
+  //   (await $`npm profile get "two-factor auth"`).toString().includes('writes')
+  // ) {
+  //   let code = '';
+  //   do {
+  //     // get otp from user
+  //     code = await question('This operation requires a one-time password: ');
+  //     // generate arg for zx command
+  //     // why use array? https://github.com/google/zx/blob/main/docs/quotes.md
+  //     otpArg = ['--otp', code];
+  //   } while (code.length !== 6);
+  // }
 
   await Promise.all(
     innerPkgs.map(async (pkg) => {
-      await $`cd packages/${pkg} && npm publish --tag ${tag} ${otpArg}`;
+      await $`cd packages/${pkg} && npm publish --tag ${tag}`;
       logger.info(`+ ${pkg}`);
     }),
   );
