@@ -1,0 +1,3 @@
+import 'zx/globals';
+
+(async () => {})();
