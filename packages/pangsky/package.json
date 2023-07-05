@@ -12,7 +12,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "bin": {
-    "pangsky": "bin/create-psky.js"
+    "psky": "bin/create-psky.js"
   },
   "files": [
     "dist",
