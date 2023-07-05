@@ -62,7 +62,7 @@ export default async ({ cwd, args }: { cwd: string; args: IArgs }) => {
         {
           type: 'select',
           name: 'appTemplate',
-          message: 'Pick Umi App Template',
+          message: 'Pick psk App Template',
           choices: [
             { title: 'Simple App', value: 'app' },
             { title: 'Ant Design Pro', value: 'max' },
