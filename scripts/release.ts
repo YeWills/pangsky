@@ -82,9 +82,9 @@ import { assert, eachPkg, getPkgs } from './.internal/utils';
     await $`git tag v${version}`;
   }
 
-  // git push
-  logger.event('git push');
-  await $`git push origin ${branch} --tags`;
+  // git push todo 网络好时，可以放开
+  // logger.event('git push');
+  // await $`git push origin ${branch} --tags`;
 
   // npm publish
   logger.event('pnpm publish');
