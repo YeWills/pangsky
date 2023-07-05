@@ -27,6 +27,7 @@ importers:
       prettier: ^2.7.1
       prettier-plugin-organize-imports: ^2.3.4
       prettier-plugin-packagejson: ^2.2.18
+      psky-scripts: workspace:*
       regenerator-runtime: ^0.13.9
       resolve: ^1.22.0
       rimraf: ^3.0.2
@@ -35,7 +36,6 @@ importers:
       turbo: ^1.3.1
       typescript: ^4.8.2
       uglify-js: ^3.15.4
-      psky-scripts: workspace:*
       zx: ^7.0.8
     devDependencies:
       '@pangskyjs/utils': link:packages/utils
@@ -61,6 +61,7 @@ importers:
       prettier: 2.7.1
       prettier-plugin-organize-imports: 2.3.4_dmjzcauo3cshxeipj7bv64ktgm
       prettier-plugin-packagejson: 2.2.18_prettier@2.7.1
+      psky-scripts: link:scripts
       regenerator-runtime: 0.13.9
       resolve: 1.22.1
       rimraf: 3.0.2
@@ -69,12 +70,11 @@ importers:
       turbo: 1.5.4
       typescript: 4.8.4
       uglify-js: 3.17.2
-      psky-scripts: link:scripts
       zx: 7.0.8
 
   packages/pangsky:
     specifiers:
-      '@pangskyjs/utils': 4.0.25
+      '@pangskyjs/utils': 4.0.26
     dependencies:
       '@pangskyjs/utils': link:../utils
 
