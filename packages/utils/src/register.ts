@@ -17,7 +17,7 @@ function transform(opts: { code: string; filename: string; implementor: any }) {
       sourcefile: filename,
       loader: ext.slice(1),
       // consistent with `tsconfig.base.json`
-      // https://github.com/umijs/umi-next/pull/729
+      // https://github.com/YeWills/pangsky-next/pull/729
       target: 'es2019',
       format: 'cjs',
       logLevel: 'error',

@@ -10,7 +10,7 @@ export function exit() {
     logger.fatal(loggerPath);
   }
   logger.fatal(
-    'Consider reporting a GitHub issue on https://github.com/umijs/umi/issues',
+    'Consider reporting a GitHub issue on https://github.com/YeWills/pangsky/issues',
   );
   // logger.fatal(FEEDBACK_MESSAGE);
 }

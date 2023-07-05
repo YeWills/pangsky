@@ -1,6 +1,4 @@
 node_modules
-.umi
-.umi-production
 dist
 .mfsu
 *.d.ts

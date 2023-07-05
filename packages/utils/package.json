@@ -1,11 +1,11 @@
 {
   "name": "@pangskyjs/utils",
   "version": "4.0.25",
-  "homepage": "https://github.com/umijs/umi/tree/master/packages/utils#readme",
-  "bugs": "https://github.com/umijs/umi/issues",
+  "homepage": "https://github.com/YeWills/pangsky/tree/master/packages/utils#readme",
+  "bugs": "https://github.com/YeWills/pangsky/issues",
   "repository": {
     "type": "git",
-    "url": "https://github.com/umijs/umi"
+    "url": "https://github.com/YeWills/pangsky"
   },
   "license": "MIT",
   "main": "dist/index.js",
@@ -16,10 +16,10 @@
   ],
   "scripts": {
     "debug": "pnpm run build && yalc publish",
-    "build": "umi-scripts father build",
-    "build:deps": "umi-scripts bundleDeps",
-    "dev": "umi-scripts father dev",
-    "test": "umi-scripts jest-turbo"
+    "build": "psky-scripts father build",
+    "build:deps": "psky-scripts bundleDeps",
+    "dev": "psky-scripts father dev",
+    "test": "psky-scripts jest-turbo"
   },
   "dependencies": {
     "chokidar": "3.5.3",

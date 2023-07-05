@@ -1,11 +1,11 @@
 // @ts-ignore
-import UmiLogo from './packages/plugin-docs/client/theme-doc/icons/umi.png';
+import PskyLogo from './packages/plugin-docs/client/theme-doc/icons/umi.png';
 
 export default {
-  title: 'UmiJS',
+  title: 'Psky',
   description: '插件化的企业级前端应用框架',
-  logo: UmiLogo,
-  github: 'https://github.com/umijs/umi',
+  logo: PskyLogo,
+  github: 'https://github.com/YeWills/pangsky',
   // i18n: [
   //   { locale: 'en-US', text: 'English' },
   //   { locale: 'zh-CN', text: '简体中文' },

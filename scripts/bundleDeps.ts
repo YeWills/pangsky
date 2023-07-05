@@ -233,7 +233,7 @@ Object.keys(exported).forEach(function (key) {
             throw new Error(`regenerate-unicode-properties is outdated, please update it to ${
               unicodeParentPkg.dependencies![unicodePkgName]
             } in bundler-utils/package.json before update compiled files!
-       ref: https://github.com/umijs/umi/pull/7972`);
+       ref: https://github.com/YeWills/pangsky/pull/7972`);
           }
         });
       }

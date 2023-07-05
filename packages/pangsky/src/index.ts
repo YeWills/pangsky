@@ -15,11 +15,11 @@ import { existsSync } from 'fs';
 import { dirname, join } from 'path';
 
 const testData = {
-  name: 'umi-plugin-demo',
+  name: 'psky-plugin-demo',
   description: 'nothing',
   mail: 'xiaohuoni@gmail.com',
   author: 'xiaohuoni',
-  org: 'umijs',
+  org: 'pangskyjs',
   version: require('../package').version,
   npmClient: 'pnpm',
   registry: 'https://registry.npmjs.org/',

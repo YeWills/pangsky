@@ -8,7 +8,7 @@ export const PATHS = {
 } as const;
 
 export const SCRIPTS = {
-  BUNDLE_DEPS: 'umi-scripts bundleDeps',
-  DEV: 'umi-scripts father dev',
-  BUILD: 'umi-scripts father build',
+  BUNDLE_DEPS: 'psky-scripts bundleDeps',
+  DEV: 'psky-scripts father dev',
+  BUILD: 'psky-scripts father build',
 } as const;

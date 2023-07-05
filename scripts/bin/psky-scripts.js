@@ -15,10 +15,10 @@ assert(
   `Executed script '${chalk.red(name)}' does not exist`
 )
 
-console.log(chalk.cyan(`umi-scripts: ${name}\n`))
+console.log(chalk.cyan(`psky-scripts: ${name}\n`))
 
 // for pass all params
-// e.g. umi-scripts bundleDeps --dep chalk
+// e.g. psky-scripts bundleDeps --dep chalk
 //                             ^ pass all => -- --dep chalk
 //      argv.slice(2) <in bundleDeps.ts> : --dep chalk
 if (throughArgs.length) {
@@ -36,6 +36,6 @@ const spawn = sync(
   }
 )
 if (spawn.status !== 0) {
-  console.log(chalk.red(`umi-scripts: ${name} execute fail`))
+  console.log(chalk.red(`psky-scripts: ${name} execute fail`))
   process.exit(1)
 }
