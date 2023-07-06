@@ -9,6 +9,6 @@ export const PATHS = {
 
 export const SCRIPTS = {
   BUNDLE_DEPS: 'psky-scripts bundleDeps',
-  DEV: 'psky-scripts father dev',
-  BUILD: 'psky-scripts father build',
+  DEV: 'psky-scripts todo dev',
+  BUILD: 'psky-scripts build',
 } as const;

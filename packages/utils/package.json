@@ -16,9 +16,9 @@
   ],
   "scripts": {
     "debug": "pnpm run build && yalc publish",
-    "build": "psky-scripts father build",
+    "build": "psky-scripts build",
     "build:deps": "psky-scripts bundleDeps",
-    "dev": "psky-scripts father dev",
+    "dev": "psky-scripts todo dev",
     "test": "psky-scripts jest-turbo"
   },
   "dependencies": {
