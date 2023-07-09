@@ -1,6 +1,7 @@
 {
   "private": true,
   "scripts": {
+    "yalc": "pnpm run --filter \"./packages/**\" yalc",
     "bootstrap": "psky-scripts bootstrap",
     "build": "psky-scripts turbo build",
     "build:extra": "psky-scripts turbo build:extra",

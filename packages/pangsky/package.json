@@ -19,6 +19,7 @@
     "templates"
   ],
   "scripts": {
+    "yalc": "yalc publish",
     "debug": "pnpm run build && yalc publish",
     "build": "psky-scripts build",
     "build:deps": "psky-scripts bundleDeps",
