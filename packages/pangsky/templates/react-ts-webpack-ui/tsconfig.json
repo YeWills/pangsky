@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "outDir": "types",
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "jsx": "react",
+    "baseUrl": "./",
+    "paths": {
+      "@@/*": [".dumi/tmp/*"],
+      "pkg2": ["src"],
+      "pkg2/*": ["src/*", "*"]
+    }
+  },
+  "include": ["./externals.d.ts", "src/**/*"]
+}
