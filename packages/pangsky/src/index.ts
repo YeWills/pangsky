@@ -64,6 +64,7 @@ export default async ({ cwd, args }: { cwd: string; args: IArgs }) => {
           name: 'appTemplate',
           message: 'Pick psk App Template',
           choices: [
+            { title: 'react typescript webpack ui', value: 'react-ts-webpack-ui' },
             { title: 'Simple App', value: 'app' },
             { title: 'Ant Design Pro', value: 'max' },
             { title: 'Vue Simple App', value: 'vue-app' },
@@ -195,7 +196,8 @@ export default async ({ cwd, args }: { cwd: string; args: IArgs }) => {
 
   // install deps
   if (!args.default && args.install !== false) {
-    installWithNpmClient({ npmClient, cwd: target });
+    // todo
+    // installWithNpmClient({ npmClient, cwd: target });
   } else {
     logger.info(`Skip install deps`);
   }
