@@ -1,6 +1,6 @@
 {
   "name": "pangsky",
-  "version": "4.0.31",
+  "version": "4.0.32",
   "description": "fast create project",
   "homepage": "https://github.com/YeWills/pangsky/tree/main/packages/pangsky#readme",
   "bugs": "https://github.com/YeWills/pangsky/issues",
@@ -27,7 +27,7 @@
     "test": "psky-scripts jest-turbo"
   },
   "dependencies": {
-    "@pangskyjs/utils": "4.0.31"
+    "@pangskyjs/utils": "4.0.32"
   },
   "publishConfig": {
     "access": "public"

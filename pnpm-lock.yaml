@@ -82,7 +82,7 @@ importers:
 
   packages/pangsky:
     specifiers:
-      '@pangskyjs/utils': 4.0.31
+      '@pangskyjs/utils': 4.0.32
     dependencies:
       '@pangskyjs/utils': link:../utils
 
