@@ -4,7 +4,6 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["*"],
-      "test-utils": ["test/lib/testUtils"],
       "@pangskyjs/utils": ["./packages/utils"],
     }
   }

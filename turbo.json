@@ -22,7 +22,6 @@
   "globalDependencies": [
     "babel.config.json",
     "tsconfig.base.json",
-    "tsconfig.json",
-    "jest.config.ts"
+    "tsconfig.json"
   ]
 }
