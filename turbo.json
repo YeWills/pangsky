@@ -6,6 +6,9 @@
       "dependsOn": ["^build"],
       "outputs": ["dist/**"]
     },
+    "yalc": {
+      "dependsOn": ["^build", "yalc"]
+    },
     "build:extra": {
       "cache": false
     },
