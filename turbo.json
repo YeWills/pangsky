@@ -9,9 +9,6 @@
     "yalc": {
       "dependsOn": ["^build", "yalc"]
     },
-    "build:extra": {
-      "cache": false
-    },
     "dev": {
       "cache": false
     },
