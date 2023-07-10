@@ -5,7 +5,7 @@ export default {
   title: 'Psky',
   description: '插件化的企业级前端应用框架',
   logo: PskyLogo,
-  github: 'https://github.com/YeWills/pangsky',
+  github: '',
   // i18n: [
   //   { locale: 'en-US', text: 'English' },
   //   { locale: 'zh-CN', text: '简体中文' },

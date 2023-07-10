@@ -2,11 +2,9 @@
   "name": "pangsky",
   "version": "4.0.32",
   "description": "fast create project",
-  "homepage": "https://github.com/YeWills/pangsky/tree/main/packages/pangsky#readme",
-  "bugs": "https://github.com/YeWills/pangsky/issues",
   "repository": {
     "type": "git",
-    "url": "https://github.com/YeWills/pangsky"
+    "url": ""
   },
   "license": "MIT",
   "main": "dist/index.js",
