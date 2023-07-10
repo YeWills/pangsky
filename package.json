@@ -2,7 +2,7 @@
   "private": true,
   "scripts": {
     "build": "psky-scripts turbo build",
-    "build:release": "psky-scripts turbo build --no-cache -- --declarationMap false",
+    "build:release": "psky-scripts turbo --cmd build --no-cache -- --declarationMap false",
     "yalc": "psky-scripts turbo yalc",
     "dev": "psky-scripts turbo dev --parallel",
     "format": "prettier --cache --write .",
