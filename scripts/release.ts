@@ -79,7 +79,7 @@ import { assert, eachPkg, getPkgs } from './.internal/utils';
   // git tag
   if (tag !== 'canary') {
     logger.event('git tag');
-    await $`git tag v${version}`;
+    // await $`git tag v${version}`;
   }
 
   // git push todo 网络好时，可以放开
