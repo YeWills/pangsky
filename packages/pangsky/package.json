@@ -17,12 +17,13 @@
     "templates"
   ],
   "scripts": {
-    "yalc": "yalc publish",
-    "debug": "pnpm run build && yalc publish",
     "build": "psky-scripts build",
     "build:deps": "psky-scripts bundleDeps",
+    "debug": "pnpm run build && yalc publish",
     "dev": "psky-scripts todo dev",
-    "test": "psky-scripts jest-turbo"
+    "test": "psky-scripts jest-turbo",
+    "tsc": "tsc",
+    "yalc": "yalc publish"
   },
   "dependencies": {
     "@pangskyjs/utils": "0.0.1"

@@ -30,7 +30,6 @@ import { assert, eachPkg, getPkgs } from './.internal/utils';
   const changed = (await $`lerna changed --loglevel error`).stdout.trim();
   assert(changed, `no package is changed`);
 
-
   // clean
   logger.event('clean');
   eachPkg(pkgs, ({ dir, name }) => {
@@ -41,6 +40,8 @@ import { assert, eachPkg, getPkgs } from './.internal/utils';
   // build packages
   logger.event('build packages');
   await $`npm run build:release`;
+  // 生成声明文件
+  await $`npm run tsc`;
   // await $`npm run build:extra`;
   //
   logger.event('check client code change');
@@ -48,7 +49,6 @@ import { assert, eachPkg, getPkgs } from './.internal/utils';
     await $`git status --porcelain`
   ).stdout.trim().length;
   assert(!isGitCleanAfterClientBuild, 'client code is updated');
-
 
   // bump version
   logger.event('bump version');
@@ -63,8 +63,6 @@ import { assert, eachPkg, getPkgs } from './.internal/utils';
     tag = 'next';
   }
   if (version.includes('-canary.')) tag = 'canary';
-
- 
 
   // update pnpm lockfile
   logger.event('update pnpm lockfile');
