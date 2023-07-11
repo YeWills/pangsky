@@ -11,6 +11,7 @@
     "postinstall": "psky-scripts postinstall",
     "prepare": "husky install",
     "release": "psky-scripts release",
+    "release:d": "psky-scripts release --debug",
     "tsc": "pnpm --filter \"./packages/**\" tsc",
     "turbo:clean": "rimraf .turbo",
     "yalc": "psky-scripts turbo yalc"
