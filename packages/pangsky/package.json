@@ -1,5 +1,5 @@
 {
-  "name": "pangsky",
+  "name": "psky",
   "version": "0.0.1",
   "description": "fast create project",
   "repository": {
@@ -26,7 +26,7 @@
     "yalc": "yalc publish"
   },
   "dependencies": {
-    "@pangskyjs/utils": "0.0.1"
+    "@pskyjs/utils": "0.0.1"
   },
   "publishConfig": {
     "access": "public"

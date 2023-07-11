@@ -1,4 +1,4 @@
-import { yParser } from '@pangskyjs/utils';
+import { yParser } from '@pskyjs/utils';
 
 interface IArgs extends yParser.Arguments {
   default?: boolean;
@@ -7,7 +7,6 @@ interface IArgs extends yParser.Arguments {
   install?: boolean;
 }
 
-
 export default async ({ cwd, args }: { cwd: string; args: IArgs }) => {
-  console.log(cwd, args)
+  console.log(cwd, args);
 };

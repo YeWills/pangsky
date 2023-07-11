@@ -1,5 +1,5 @@
-import spawn from '@pangskyjs/utils/compiled/cross-spawn';
-import * as logger from '@pangskyjs/utils/src/logger';
+import spawn from '@pskyjs/utils/compiled/cross-spawn';
+import * as logger from '@pskyjs/utils/src/logger';
 import type { SpawnSyncOptions } from 'child_process';
 import { existsSync, readdirSync, readFileSync, writeFileSync } from 'fs';
 import { join } from 'path';
