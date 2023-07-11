@@ -7,6 +7,13 @@ import { PATHS } from './.internal/constants';
 import { assert, eachPkg, getPkgs } from './.internal/utils';
 
 (async () => {
+  const args = process.argv.slice(2);
+  let isDebug = false;
+  if (args && args.length) {
+    // debug模式下，不进行 git push tag、npm publish
+    isDebug = args.includes('debug') || args.includes('--debug');
+  }
+
   const { branch } = getGitRepoInfo();
   logger.info(`branch: ${branch}`);
   const pkgs = getPkgs();
@@ -80,9 +87,10 @@ import { assert, eachPkg, getPkgs } from './.internal/utils';
     await $`git tag v${version}`;
   }
 
-  // git push todo 网络好时，可以放开
-  // logger.event('git push');
-  // await $`git push origin ${branch} --tags`;
+  if (!isDebug) {
+    // logger.event('git push');
+    await $`git push origin ${branch} --tags`;
+  }
 
   // npm publish
   logger.event('pnpm publish');
@@ -91,9 +99,10 @@ import { assert, eachPkg, getPkgs } from './.internal/utils';
 
   await Promise.all(
     innerPkgs.map(async (pkg) => {
-      // todo 正式包，放开
-      // await $`cd packages/${pkg} && npm publish --tag ${tag}`;
-      logger.info(`+ ${pkg}`);
+      if (!isDebug) {
+        await $`cd packages/${pkg} && npm publish --tag ${tag}`;
+        logger.info(`+ ${pkg}`);
+      }
     }),
   );
   $.verbose = true;
