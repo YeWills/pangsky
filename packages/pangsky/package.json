@@ -19,9 +19,10 @@
     "templates"
   ],
   "scripts": {
-    "yalc": "yalc publish",
-    "debug": "pnpm run build && yalc publish",
     "build": "psky-scripts build",
+    "yalc": "yalc publish",
+    "tsc": "tsc",
+    "debug": "pnpm run build && yalc publish",
     "build:deps": "psky-scripts bundleDeps",
     "dev": "psky-scripts todo dev",
     "test": "psky-scripts jest-turbo"

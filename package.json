@@ -11,7 +11,7 @@
     "release": "psky-scripts release",
     "doc": "dumi dev",
     "docs:build": "dumi build",
-    "tsc:check": "tsc --noEmit",
+    "tsc": "pnpm --filter \"./packages/**\" tsc",
     "turbo:clean": "rimraf .turbo"
   },
   "lint-staged": {

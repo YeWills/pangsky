@@ -15,9 +15,10 @@
     "compiled"
   ],
   "scripts": {
+    "build": "psky-scripts build",
+    "tsc": "tsc",
     "yalc": "yalc publish",
     "debug": "pnpm run build && yalc publish",
-    "build": "psky-scripts build",
     "build:deps": "psky-scripts bundleDeps",
     "dev": "psky-scripts todo dev",
     "test": "psky-scripts jest-turbo"

@@ -41,6 +41,8 @@ import { assert, eachPkg, getPkgs } from './.internal/utils';
   // build packages
   logger.event('build packages');
   await $`npm run build:release`;
+    // 生成声明文件
+  await $`npm run tsc`;
   // await $`npm run build:extra`;
   //
   logger.event('check client code change');
