@@ -82,7 +82,7 @@ importers:
 
   packages/pangsky:
     specifiers:
-      '@pskyjs/utils': 0.0.2
+      '@pskyjs/utils': 0.0.1
     dependencies:
       '@pskyjs/utils': link:../utils
 
