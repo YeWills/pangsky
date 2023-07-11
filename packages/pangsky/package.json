@@ -1,6 +1,6 @@
 {
   "name": "psky",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "fast create project",
   "repository": {
     "type": "git",
@@ -26,7 +26,7 @@
     "yalc": "yalc publish"
   },
   "dependencies": {
-    "@pskyjs/utils": "0.0.1"
+    "@pskyjs/utils": "0.0.2"
   },
   "publishConfig": {
     "access": "public"
