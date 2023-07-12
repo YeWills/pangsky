@@ -19,4 +19,4 @@ features:
     description: Put ! description here
 ---
 
-pkg2
+react-ts-webpack-ui

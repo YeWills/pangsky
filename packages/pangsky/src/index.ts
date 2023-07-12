@@ -65,7 +65,7 @@ export default async ({ cwd, args }: { cwd: string; args: IArgs }) => {
           message: 'Pick psk App Template',
           choices: [
             {
-              title: 'react typescript webpack ui',
+              title: 'react typescript webpack ui 组件库',
               value: 'react-ts-webpack-ui',
             },
             { title: 'Simple App', value: 'app' },

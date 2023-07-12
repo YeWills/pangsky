@@ -1,5 +1,5 @@
 {
-  "name": "hz-react-ts-ui",
+  "name": "react-ts-webpack-ui",
   "author":"{{{ author }}}",
   "version": "0.0.1",
   "description": "A react ui library developed with typescript webpack",

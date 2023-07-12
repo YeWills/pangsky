@@ -10,8 +10,8 @@
     "baseUrl": "./",
     "paths": {
       "@@/*": [".dumi/tmp/*"],
-      "pkg2": ["src"],
-      "pkg2/*": ["src/*", "*"]
+      "react-ts-webpack-ui": ["src"],
+      "react-ts-webpack-ui/*": ["src/*", "*"]
     }
   },
   "include": ["./externals.d.ts", "src/**/*"]
