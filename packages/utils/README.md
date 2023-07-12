@@ -1,1 +1,1 @@
-# @pangskyjs/utils
+# @pskyjs/utils

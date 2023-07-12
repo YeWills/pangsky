@@ -5,7 +5,7 @@
     "paths": {
       "@/*": ["*"],
       "test-utils": ["test/lib/testUtils"],
-      "@pangskyjs/utils": ["./packages/utils"],
+      "@pskyjs/utils": ["./packages/utils"],
     }
   }
 }

@@ -1,11 +1,11 @@
 {
-  "name": "@pangskyjs/utils",
+  "name": "@pskyjs/utils",
   "version": "4.0.31",
-  "homepage": "https://github.com/YeWills/pangsky/tree/master/packages/utils#readme",
-  "bugs": "https://github.com/YeWills/pangsky/issues",
+  "homepage": "https://github.com/YeWills/psky/tree/master/packages/utils#readme",
+  "bugs": "https://github.com/YeWills/psky/issues",
   "repository": {
     "type": "git",
-    "url": "https://github.com/YeWills/pangsky"
+    "url": "https://github.com/YeWills/psky"
   },
   "license": "MIT",
   "main": "dist/index.js",

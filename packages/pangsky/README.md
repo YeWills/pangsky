@@ -1,2 +1,2 @@
-# pangsky
+# psky
 

@@ -1,4 +1,4 @@
-import { rimraf } from '@pangskyjs/utils';
+import { rimraf } from '@pskyjs/utils';
 import { existsSync } from 'fs';
 import { join } from 'path';
 import runGenerator from './index';

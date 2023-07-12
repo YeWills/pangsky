@@ -57,14 +57,14 @@ import { setExcludeFolder } from './.internal/utils';
             },
             repository: {
               type: 'git',
-              url: 'https://github.com/YeWills/pangsky',
+              url: 'https://github.com/YeWills/psky',
             },
             authors: [
               'chencheng <sorrycc@gmail.com> (https://github.com/sorrycc)',
             ],
             license: 'MIT',
-            bugs: 'https://github.com/YeWills/pangsky/issues',
-            homepage: `https://github.com/YeWills/pangsky/tree/master/packages/${opts.pkg}#readme`,
+            bugs: 'https://github.com/YeWills/psky/issues',
+            homepage: `https://github.com/YeWills/psky/tree/master/packages/${opts.pkg}#readme`,
             publishConfig: {
               access: 'public',
             },

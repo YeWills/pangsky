@@ -10,7 +10,7 @@ import {
   prompts,
   tryPaths,
   yParser,
-} from '@pangskyjs/utils';
+} from '@pskyjs/utils';
 import { existsSync } from 'fs';
 import { dirname, join } from 'path';
 

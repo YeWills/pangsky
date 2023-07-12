@@ -1,4 +1,4 @@
-import { glob, lodash, logger } from '@pangskyjs/utils';
+import { glob, lodash, logger } from '@pskyjs/utils';
 import { isMatch } from 'matcher';
 import 'zx/globals';
 import { PATHS, SCRIPTS } from './.internal/constants';

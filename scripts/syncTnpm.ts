@@ -1,4 +1,4 @@
-import * as logger from '@pangskyjs/utils/src/logger';
+import * as logger from '@pskyjs/utils/src/logger';
 import 'zx/globals';
 import { PATHS } from './.internal/constants';
 import { getPkgs } from './.internal/utils';

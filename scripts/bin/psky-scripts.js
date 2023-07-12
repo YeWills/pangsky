@@ -2,8 +2,8 @@
 
 const { join } = require('path')
 const { existsSync } = require('fs')
-const { sync } = require('@pangskyjs/utils/compiled/cross-spawn')
-const chalk = require('@pangskyjs/utils/compiled/chalk').default
+const { sync } = require('@pskyjs/utils/compiled/cross-spawn')
+const chalk = require('@pskyjs/utils/compiled/chalk').default
 const assert = require('assert')
 
 const argv = process.argv.slice(2)

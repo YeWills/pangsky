@@ -1,12 +1,12 @@
 {
-  "name": "pangsky",
+  "name": "psky",
   "version": "4.0.31",
   "description": "fast create project",
-  "homepage": "https://github.com/YeWills/pangsky/tree/main/packages/pangsky#readme",
-  "bugs": "https://github.com/YeWills/pangsky/issues",
+  "homepage": "https://github.com/YeWills/psky/tree/main/packages/psky#readme",
+  "bugs": "https://github.com/YeWills/psky/issues",
   "repository": {
     "type": "git",
-    "url": "https://github.com/YeWills/pangsky"
+    "url": "https://github.com/YeWills/psky"
   },
   "license": "MIT",
   "main": "dist/index.js",
@@ -28,7 +28,7 @@
     "test": "psky-scripts jest-turbo"
   },
   "dependencies": {
-    "@pangskyjs/utils": "4.0.31"
+    "@pskyjs/utils": "4.0.31"
   },
   "publishConfig": {
     "access": "public"
