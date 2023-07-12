@@ -65,6 +65,10 @@ export default async ({ cwd, args }: { cwd: string; args: IArgs }) => {
           message: 'Pick psk App Template',
           choices: [
             {
+              title: 'ts monorepo工具库，基于pnpm lerna turbo',
+              value: 'monorepo-ts-cli',
+            },
+            {
               title: 'react typescript webpack ui 组件库',
               value: 'react-ts-webpack-ui',
             },
