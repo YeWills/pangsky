@@ -9,6 +9,7 @@
     "postinstall": "psky-scripts postinstall",
     "prepare": "husky install",
     "release": "psky-scripts release",
+    "release:debug": "psky-scripts release --debug",
     "doc": "dumi dev",
     "docs:build": "dumi build",
     "tsc": "pnpm --filter \"./packages/**\" tsc",
