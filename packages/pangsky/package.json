@@ -1,6 +1,6 @@
 {
   "name": "psky",
-  "version": "4.0.31",
+  "version": "4.0.32",
   "description": "fast create project",
   "homepage": "https://github.com/YeWills/psky/tree/main/packages/psky#readme",
   "bugs": "https://github.com/YeWills/psky/issues",
@@ -20,15 +20,15 @@
   ],
   "scripts": {
     "build": "psky-scripts build",
-    "yalc": "yalc publish",
-    "tsc": "tsc",
-    "debug": "pnpm run build && yalc publish",
     "build:deps": "psky-scripts bundleDeps",
+    "debug": "pnpm run build && yalc publish",
     "dev": "psky-scripts todo dev",
-    "test": "psky-scripts jest-turbo"
+    "test": "psky-scripts jest-turbo",
+    "tsc": "tsc",
+    "yalc": "yalc publish"
   },
   "dependencies": {
-    "@pskyjs/utils": "4.0.31"
+    "@pskyjs/utils": "4.0.32"
   },
   "publishConfig": {
     "access": "public"

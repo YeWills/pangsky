@@ -1,6 +1,6 @@
 {
   "name": "@pskyjs/utils",
-  "version": "4.0.31",
+  "version": "4.0.32",
   "homepage": "https://github.com/YeWills/psky/tree/master/packages/utils#readme",
   "bugs": "https://github.com/YeWills/psky/issues",
   "repository": {
@@ -16,12 +16,12 @@
   ],
   "scripts": {
     "build": "psky-scripts build",
-    "tsc": "tsc",
-    "yalc": "yalc publish",
-    "debug": "pnpm run build && yalc publish",
     "build:deps": "psky-scripts bundleDeps",
+    "debug": "pnpm run build && yalc publish",
     "dev": "psky-scripts todo dev",
-    "test": "psky-scripts jest-turbo"
+    "test": "psky-scripts jest-turbo",
+    "tsc": "tsc",
+    "yalc": "yalc publish"
   },
   "dependencies": {
     "chokidar": "3.5.3",
