@@ -1,6 +1,6 @@
 {
   "name": "psky",
-  "version": "4.0.34",
+  "version": "4.0.35",
   "description": "fast create project",
   "homepage": "https://github.com/YeWills/psky/tree/main/packages/psky#readme",
   "bugs": "https://github.com/YeWills/psky/issues",
@@ -28,7 +28,7 @@
     "yalc": "yalc publish"
   },
   "dependencies": {
-    "@pskyjs/utils": "4.0.34"
+    "@pskyjs/utils": "4.0.35"
   },
   "publishConfig": {
     "access": "public"
