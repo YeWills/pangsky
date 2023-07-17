@@ -11,8 +11,11 @@ import {
   tryPaths,
   yParser,
 } from '@pskyjs/utils';
+import gitClone from 'git-clone';
+import ora from 'ora';
+import chalk from 'chalk';
 import { existsSync } from 'fs';
-import { dirname, join } from 'path';
+import path, { dirname, join } from 'path';
 
 const testData = {
   name: 'psky-plugin-demo',
@@ -23,6 +26,31 @@ const testData = {
   version: require('../package').version,
   npmClient: 'pnpm',
   registry: 'https://registry.npmjs.org/',
+};
+
+const setProjectName = ({ author }: any, targetDir: string) => {
+  return new Promise((resolve, reject) => {
+    const projectName = 'projectName';
+    try {
+      const pkgPath = path.resolve(targetDir, 'package.json');
+      let pkg: any = fsExtra.readFileSync(pkgPath);
+      pkg = JSON.parse(pkg);
+      pkg.name = projectName;
+      pkg.author = author;
+      fsExtra.writeFileSync(pkgPath, JSON.stringify(pkg, null, 2));
+      // if (template === "ssr") {
+      //   const pm2Path = path.resolve(targetDir, "pm2.json");
+      //   let content : any = fsExtra.readFileSync(pm2Path);
+      //   content = content
+      //     .toString()
+      //     .replace('"name": ""', `"name": "${projectName}"`);
+      //     fsExtra.writeFileSync(pm2Path, content);
+      // }
+      resolve(true);
+    } catch (e) {
+      reject(e);
+    }
+  });
 };
 
 interface IArgs extends yParser.Arguments {
@@ -64,6 +92,10 @@ export default async ({ cwd, args }: { cwd: string; args: IArgs }) => {
           name: 'appTemplate',
           message: 'Pick psk App Template',
           choices: [
+            {
+              title: '简单的react项目示例 react、ts、scss',
+              value: 'react-simple',
+            },
             {
               title: 'ts monorepo工具库，基于pnpm lerna turbo',
               value: 'monorepo-ts-cli',
@@ -159,6 +191,56 @@ export default async ({ cwd, args }: { cwd: string; args: IArgs }) => {
   const shouldInitGit = args.git !== false;
   // now husky is not supported in monorepo
   const withHusky = shouldInitGit && !inMonorepo;
+
+  if (appTemplate === 'react-simple') {
+    const spinner = ora(`Creating project ${chalk.yellow(appTemplate)}.\n`);
+    spinner.start();
+
+    const url = 'https://gitee.com/mayising/psky-template.git';
+    gitClone(url, name, {}, async (err: string) => {
+      if (err) {
+        spinner.fail();
+        console.log(chalk.red('\nClone template failed'));
+        console.log('\n', err);
+        return;
+        // reject(err);
+      } else {
+        const cwd = process.cwd();
+        try {
+          setProjectName({ author }, target);
+
+          //  console.log(chalk.yellow("\nInstalling dependencies...\n"));
+          // //  await install(pm, targetDir);
+          //  console.log(
+          //    `\n👉  Get started with the following com·`);
+
+          // fs.moveSync(
+          //   path.resolve(cwd, `${name}/${dir[template]}`),
+          //   path.resolve(cwd, `${name}__temp`),
+          //   { overwrite: true }
+          // );
+          // fs.moveSync(
+          //   path.resolve(cwd, `${name}__temp`),
+          //   path.resolve(cwd, name),
+          //   { overwrite: true }
+          // );
+          // spinner.stop();
+          // console.log(
+          //   chalk.green(
+          //     `\n🎉  Successfully created project ${chalk.yellow(name)}.`
+          //   )
+          // );
+          // resolve();
+        } catch (e) {
+          // console.log(chalk.red(`\nCreated project ${name} failed.`));
+          // fs.remove(path.resolve(cwd, name));
+          // reject(err);
+        }
+      }
+    });
+
+    return;
+  }
 
   const generator = new BaseGenerator({
     path: join(__dirname, '..', 'templates', templateName),
