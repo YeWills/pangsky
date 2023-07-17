@@ -28,7 +28,10 @@
     "yalc": "yalc publish"
   },
   "dependencies": {
-    "@pskyjs/utils": "4.0.36"
+    "@pskyjs/utils": "4.0.36",
+    "chalk": "4.1.2",
+    "git-clone": "^0.2.0",
+    "ora": "5"
   },
   "publishConfig": {
     "access": "public"

@@ -24,11 +24,6 @@
       "prettier --cache --parser=typescript --write"
     ]
   },
-  "dependencies": {
-    "chalk": "4.1.2",
-    "git-clone": "^0.2.0",
-    "ora": "5"
-  },
   "devDependencies": {
     "@babel/cli": "^7.22.6",
     "@babel/core": "^7.22.6",
