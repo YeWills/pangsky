@@ -7,12 +7,23 @@ import { PATHS } from './.internal/constants';
 import { assert, eachPkg, getPkgs } from './.internal/utils';
 
 (async () => {
-
   const args = process.argv.slice(2);
   let isDebug = false;
+  let isSoon = false;
+  let isNpmPublish = true;
+  let isGitPublish = true;
   if (args && args.length) {
     // debug模式下，不进行 git push tag、npm publish
     isDebug = args.includes('debug') || args.includes('--debug');
+    isNpmPublish = isDebug ? false : true;
+    isGitPublish = isDebug ? false : true;
+
+    // 因为git publish网络太慢，可以npm先publish，快速完成版本打包发布 soon
+    isSoon = args.includes('soon') || args.includes('--soon');
+    if (isSoon) {
+      isNpmPublish = true;
+      isGitPublish = false;
+    }
   }
 
   const { branch } = getGitRepoInfo();
@@ -38,7 +49,6 @@ import { assert, eachPkg, getPkgs } from './.internal/utils';
   const changed = (await $`lerna changed --loglevel error`).stdout.trim();
   assert(changed, `no package is changed`);
 
-
   // clean
   logger.event('clean');
   eachPkg(pkgs, ({ dir, name }) => {
@@ -49,7 +59,7 @@ import { assert, eachPkg, getPkgs } from './.internal/utils';
   // build packages
   logger.event('build packages');
   await $`npm run build:release`;
-    // 生成声明文件
+  // 生成声明文件
   await $`npm run tsc`;
   // await $`npm run build:extra`;
   //
@@ -58,7 +68,6 @@ import { assert, eachPkg, getPkgs } from './.internal/utils';
     await $`git status --porcelain`
   ).stdout.trim().length;
   assert(!isGitCleanAfterClientBuild, 'client code is updated');
-
 
   // bump version
   logger.event('bump version');
@@ -73,8 +82,6 @@ import { assert, eachPkg, getPkgs } from './.internal/utils';
     tag = 'next';
   }
   if (version.includes('-canary.')) tag = 'canary';
-
- 
 
   // update pnpm lockfile
   logger.event('update pnpm lockfile');
@@ -92,7 +99,7 @@ import { assert, eachPkg, getPkgs } from './.internal/utils';
     await $`git tag v${version}`;
   }
 
-  if (!isDebug) {
+  if (isGitPublish) {
     // logger.event('git push');
     await $`git push origin ${branch} --tags`;
   }
@@ -102,10 +109,9 @@ import { assert, eachPkg, getPkgs } from './.internal/utils';
   $.verbose = false;
   const innerPkgs = pkgs;
 
-
   await Promise.all(
     innerPkgs.map(async (pkg) => {
-      if (!isDebug) {
+      if (isNpmPublish) {
         await $`cd packages/${pkg} && npm publish --tag ${tag}`;
         logger.info(`+ ${pkg}`);
       }
@@ -113,7 +119,6 @@ import { assert, eachPkg, getPkgs } from './.internal/utils';
   );
 
   $.verbose = true;
-
 })();
 
 function setDepsVersion(opts: {
