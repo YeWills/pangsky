@@ -15,4 +15,8 @@ pnpm dev 可以监听包编译，时刻输出最新代码
 去 /Users/yewills/Documents/git/test/py 项目下创建 test 文件夹，
 在test下面，执行 `node  ../node_modules/psky/bin/create-psky.js`
 
-
+例如：
+```bash
+npm i ora@5.4.1 chalk@4.1.2 git-clone@0.2.0
+yalc add psky @pskyjs/utils
+```

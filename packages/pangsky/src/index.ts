@@ -16,6 +16,7 @@ import ora from 'ora';
 import chalk from 'chalk';
 import { existsSync } from 'fs';
 import path, { dirname, join } from 'path';
+import { pskyTemplateGit } from './const';
 
 const testData = {
   name: 'psky-plugin-demo',
@@ -28,9 +29,8 @@ const testData = {
   registry: 'https://registry.npmjs.org/',
 };
 
-const setProjectName = ({ author }: any, targetDir: string) => {
+const setProjectName = ({ author, projectName }: any, targetDir: string) => {
   return new Promise((resolve, reject) => {
-    const projectName = 'projectName';
     try {
       const pkgPath = path.resolve(targetDir, 'package.json');
       let pkg: any = fsExtra.readFileSync(pkgPath);
@@ -38,14 +38,6 @@ const setProjectName = ({ author }: any, targetDir: string) => {
       pkg.name = projectName;
       pkg.author = author;
       fsExtra.writeFileSync(pkgPath, JSON.stringify(pkg, null, 2));
-      // if (template === "ssr") {
-      //   const pm2Path = path.resolve(targetDir, "pm2.json");
-      //   let content : any = fsExtra.readFileSync(pm2Path);
-      //   content = content
-      //     .toString()
-      //     .replace('"name": ""', `"name": "${projectName}"`);
-      //     fsExtra.writeFileSync(pm2Path, content);
-      // }
       resolve(true);
     } catch (e) {
       reject(e);
@@ -192,49 +184,43 @@ export default async ({ cwd, args }: { cwd: string; args: IArgs }) => {
   // now husky is not supported in monorepo
   const withHusky = shouldInitGit && !inMonorepo;
 
-  if (appTemplate === 'react-simple') {
+  // git template 仓库中，对应包所在的目录文件名，通常文件名与模版同名，此变量主要用于物理地址处理
+  const folderPkgName = 'react-simple';
+
+  if (appTemplate === folderPkgName) {
     const spinner = ora(`Creating project ${chalk.yellow(appTemplate)}.\n`);
     spinner.start();
 
-    const url = 'https://gitee.com/mayising/psky-template.git';
-    gitClone(url, name, {}, async (err: string) => {
+    const appName = name || 'psky-app';
+    const __tempFolder = '__temp';
+    const gitSourcePath = `${target}/${__tempFolder}`;
+    const pkgSourcePath = `${target}/${__tempFolder}/${folderPkgName}`;
+    const pkgTargetPath = `${target}/${appName}`;
+    gitClone(pskyTemplateGit, gitSourcePath, {}, async (err: string) => {
       if (err) {
         spinner.fail();
         console.log(chalk.red('\nClone template failed'));
         console.log('\n', err);
         return;
-        // reject(err);
       } else {
-        const cwd = process.cwd();
         try {
-          setProjectName({ author }, target);
+          console.log(chalk.yellow('\nInstalling dependencies...\n'));
+          console.log(`\n👉  Get started with the following com1·`);
 
-          //  console.log(chalk.yellow("\nInstalling dependencies...\n"));
-          // //  await install(pm, targetDir);
-          //  console.log(
-          //    `\n👉  Get started with the following com·`);
+          fsExtra.moveSync(pkgSourcePath, pkgTargetPath, { overwrite: true });
 
-          // fs.moveSync(
-          //   path.resolve(cwd, `${name}/${dir[template]}`),
-          //   path.resolve(cwd, `${name}__temp`),
-          //   { overwrite: true }
-          // );
-          // fs.moveSync(
-          //   path.resolve(cwd, `${name}__temp`),
-          //   path.resolve(cwd, name),
-          //   { overwrite: true }
-          // );
-          // spinner.stop();
-          // console.log(
-          //   chalk.green(
-          //     `\n🎉  Successfully created project ${chalk.yellow(name)}.`
-          //   )
-          // );
-          // resolve();
+          fsExtra.remove(gitSourcePath);
+          setProjectName({ author, projectName: appName }, `${pkgTargetPath}`);
+          spinner.stop();
+          console.log(
+            chalk.green(
+              `\n🎉  Successfully created project ${chalk.yellow(name)}.`,
+            ),
+          );
         } catch (e) {
-          // console.log(chalk.red(`\nCreated project ${name} failed.`));
-          // fs.remove(path.resolve(cwd, name));
-          // reject(err);
+          if (name) {
+            fsExtra.remove(gitSourcePath);
+          }
         }
       }
     });
