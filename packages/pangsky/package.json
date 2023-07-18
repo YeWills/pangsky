@@ -1,6 +1,6 @@
 {
   "name": "psky",
-  "version": "4.0.36",
+  "version": "4.0.37",
   "description": "fast create project",
   "homepage": "https://github.com/YeWills/psky/tree/main/packages/psky#readme",
   "bugs": "https://github.com/YeWills/psky/issues",
@@ -28,7 +28,7 @@
     "yalc": "yalc publish"
   },
   "dependencies": {
-    "@pskyjs/utils": "4.0.36",
+    "@pskyjs/utils": "4.0.37",
     "chalk": "4.1.2",
     "git-clone": "^0.2.0",
     "ora": "5.4.1"
