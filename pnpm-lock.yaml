@@ -82,7 +82,7 @@ importers:
 
   packages/pangsky:
     specifiers:
-      '@pskyjs/utils': 4.0.37
+      '@pskyjs/utils': 5.0.0
       chalk: 4.1.2
       git-clone: ^0.2.0
       ora: 5.4.1
