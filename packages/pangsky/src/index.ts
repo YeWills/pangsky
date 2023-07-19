@@ -16,7 +16,7 @@ import ora from 'ora';
 import chalk from 'chalk';
 import { existsSync } from 'fs';
 import path, { dirname, join } from 'path';
-import { pskyTemplateGit } from './const';
+import { templateList } from './const';
 
 const testData = {
   name: 'psky-plugin-demo',
@@ -84,10 +84,10 @@ export default async ({ cwd, args }: { cwd: string; args: IArgs }) => {
           name: 'appTemplate',
           message: 'Pick psk App Template',
           choices: [
-            {
-              title: '简单的react项目示例 react、ts、scss',
-              value: 'react-simple',
-            },
+            ...templateList.map(({ title }) => ({
+              title,
+              value: title,
+            })),
             {
               title: 'ts monorepo工具库，基于pnpm lerna turbo',
               value: 'monorepo-ts-cli',
@@ -184,18 +184,26 @@ export default async ({ cwd, args }: { cwd: string; args: IArgs }) => {
   // now husky is not supported in monorepo
   const withHusky = shouldInitGit && !inMonorepo;
 
-  // git template 仓库中，对应包所在的目录文件名，通常文件名与模版同名，此变量主要用于物理地址处理
-  const folderPkgName = 'react-simple';
-
-  if (appTemplate === folderPkgName) {
+  const configTemplateListItem = templateList.find(
+    (tpl) => tpl.title === appTemplate,
+  );
+  if (configTemplateListItem) {
+    // git template 仓库中， folderPkgName 对应包所在的目录文件名，通常文件名与模版同名，此变量主要用于物理地址处理
+    const { repository: pskyTemplateGit, path: folderPkgName } =
+      configTemplateListItem;
     const spinner = ora(`Creating project ${chalk.yellow(appTemplate)}.\n`);
     spinner.start();
 
     const appName = name || 'psky-app';
     const __tempFolder = '__temp';
-    const gitSourcePath = `${target}/${__tempFolder}`;
-    const pkgSourcePath = `${target}/${__tempFolder}/${folderPkgName}`;
-    const pkgTargetPath = `${target}/${appName}`;
+    let gitSourcePath = `${cwd}/${__tempFolder}`;
+    let pkgSourcePath = `${cwd}/${__tempFolder}/${folderPkgName}`;
+    let pkgTargetPath = `${cwd}/${appName}`;
+
+    if (!folderPkgName) {
+      pkgSourcePath = gitSourcePath;
+    }
+
     gitClone(pskyTemplateGit, gitSourcePath, {}, async (err: string) => {
       if (err) {
         spinner.fail();
@@ -212,6 +220,13 @@ export default async ({ cwd, args }: { cwd: string; args: IArgs }) => {
           fsExtra.remove(gitSourcePath);
           setProjectName({ author, projectName: appName }, `${pkgTargetPath}`);
           spinner.stop();
+          // install deps
+          if (!args.default && args.install !== false) {
+            installWithNpmClient({ npmClient, cwd: pkgTargetPath });
+          } else {
+            logger.info(`Skip install deps`);
+          }
+
           console.log(
             chalk.green(
               `\n🎉  Successfully created project ${chalk.yellow(name)}.`,

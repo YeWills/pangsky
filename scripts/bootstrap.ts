@@ -59,9 +59,7 @@ import { setExcludeFolder } from './.internal/utils';
               type: 'git',
               url: 'https://github.com/YeWills/psky',
             },
-            authors: [
-              'chencheng <sorrycc@gmail.com> (https://github.com/sorrycc)',
-            ],
+            authors: ['huangzhi <601661706@qq.com>'],
             license: 'MIT',
             bugs: 'https://github.com/YeWills/psky/issues',
             homepage: `https://github.com/YeWills/psky/tree/master/packages/${opts.pkg}#readme`,

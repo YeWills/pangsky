@@ -5,8 +5,6 @@ import { Package } from 'dts-packer';
 import resolve from 'resolve';
 import 'zx/globals';
 import { PATHS } from './.internal/constants';
-// @ts-ignore
-// import { Package } from '/Users/chencheng/code/github.com/sorrycc/dts-packer/dist/Package.js';
 
 export async function buildDep(opts: any) {
   console.log(chalk.green(`Build dep ${opts.pkgName || opts.file}`));

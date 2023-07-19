@@ -23,6 +23,7 @@
     "build:deps": "psky-scripts bundleDeps",
     "debug": "pnpm run build && yalc publish",
     "dev": "psky-scripts todo dev",
+    "postinstall": "node ./dist/install.js",
     "test": "psky-scripts jest-turbo",
     "tsc": "tsc",
     "yalc": "yalc publish"
@@ -37,6 +38,6 @@
     "access": "public"
   },
   "authors": [
-    "chencheng <sorrycc@gmail.com> (https://github.com/sorrycc)"
+    "huangzhi <601661706@qq.com>"
   ]
 }
