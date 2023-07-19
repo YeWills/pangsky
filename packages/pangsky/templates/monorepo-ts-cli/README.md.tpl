@@ -1,6 +1,5 @@
-# todopkg
-盘古开天劈地，引申为创建、生成之意。
-通过命令方式生成各种项目、脚手架、ui组件库 模版。
+# 工具库
+工具库，采用monorepo方式，基于pnpm lerna turbo ts。
 
 {{{ description }}}
 

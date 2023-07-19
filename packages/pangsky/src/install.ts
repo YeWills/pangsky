@@ -1,22 +1,34 @@
-import path from 'path';
-import { configValues, getStoreMainDir, readTplListJsonFile } from './const';
+import {
+  getStoreMainDir,
+  getTplListJsonPath,
+  getLocalStoreDir,
+  readTplListJsonFile,
+} from './const';
 import fs, { existsSync, mkdirSync } from 'fs-extra';
 
 const installEvent = async () => {
-  const storeDir = getStoreMainDir();
-  const installationFilePath = path.join(
-    storeDir,
-    configValues.pskyTplListJson,
-  );
-  const exsitsTplList = readTplListJsonFile();
+  const pskyTplListJsonPath = getTplListJsonPath();
+
+  const exsitsTplList = readTplListJsonFile(pskyTplListJsonPath);
   const tplListJson = {
     tplList: [...exsitsTplList],
   };
   const data = JSON.stringify(tplListJson, null, 2);
-  if (!existsSync(storeDir)) {
-    mkdirSync(storeDir);
+
+  const localStoreDir = getLocalStoreDir();
+
+  // 初始化默认配置目录或设置tplListJson
+
+  if (localStoreDir) {
+    return fs.writeFile(pskyTplListJsonPath, data);
+  } else {
+    // 如果没有自定义本地配置目录，就用默认目录
+    const storeDir = getStoreMainDir();
+    if (!existsSync(storeDir)) {
+      mkdirSync(storeDir);
+    }
+    return fs.writeFile(pskyTplListJsonPath, data);
   }
-  return fs.writeFile(installationFilePath, data);
 };
 
 installEvent();

@@ -26,7 +26,8 @@
     "postinstall": "node ./dist/install.js",
     "test": "psky-scripts jest-turbo",
     "tsc": "tsc",
-    "yalc": "yalc publish"
+    "yalc": "yalc publish",
+    "zx": "4.3.0"
   },
   "dependencies": {
     "@pskyjs/utils": "5.0.1-alpha.0",

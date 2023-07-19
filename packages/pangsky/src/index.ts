@@ -13,10 +13,17 @@ import {
 } from '@pskyjs/utils';
 import gitClone from 'git-clone';
 import ora from 'ora';
+import 'zx/globals'; //注意要使用 4.3.0或以下版本，此版本编译后的源码，支持commonjs，高版本是esmodule，无法被 node 14 直接支持运行
 import chalk from 'chalk';
 import { existsSync } from 'fs';
 import path, { dirname, join } from 'path';
-import { templateList } from './const';
+import {
+  templateList,
+  savePlaceMapPath,
+  TplItemType,
+  creatProjectConfigFile,
+  getPlaceMapPath,
+} from './const';
 
 const testData = {
   name: 'psky-plugin-demo',
@@ -67,8 +74,25 @@ interface ITemplateParams {
   extraNpmrc: string;
 }
 
+const allTplList = [
+  ...templateList,
+  {
+    title: 'ts monorepo工具库',
+    insidetpl: 'monorepo-ts-cli',
+  },
+  {
+    title: 'react typescript webpack ui 组件库',
+    insidetpl: 'react-ts-webpack-ui',
+  },
+];
+
+const promptsTplList = allTplList.map((t: TplItemType) => ({
+  title: t.title,
+  value: t.insidetpl || t.title,
+}));
+
 export default async ({ cwd, args }: { cwd: string; args: IArgs }) => {
-  const [name] = args._;
+  const [name, ...cliOpts] = args._;
   let npmClient = 'pnpm' as NpmClient;
   let registry = 'https://registry.npmjs.org/';
   let appTemplate = 'app';
@@ -83,23 +107,7 @@ export default async ({ cwd, args }: { cwd: string; args: IArgs }) => {
           type: 'select',
           name: 'appTemplate',
           message: 'Pick psk App Template',
-          choices: [
-            ...templateList.map(({ title }) => ({
-              title,
-              value: title,
-            })),
-            {
-              title: 'ts monorepo工具库，基于pnpm lerna turbo',
-              value: 'monorepo-ts-cli',
-            },
-            {
-              title: 'react typescript webpack ui 组件库',
-              value: 'react-ts-webpack-ui',
-            },
-            { title: 'Simple App', value: 'app' },
-            { title: 'Ant Design Pro', value: 'max' },
-            { title: 'Vue Simple App', value: 'vue-app' },
-          ],
+          choices: promptsTplList,
           initial: 0,
         },
         {
@@ -138,6 +146,23 @@ export default async ({ cwd, args }: { cwd: string; args: IArgs }) => {
     npmClient = response.npmClient;
     registry = response.registry;
     appTemplate = response.appTemplate;
+  }
+
+  if (appTemplate) {
+    const { filePath } = getPlaceMapPath();
+    if (fs.existsSync(filePath)) {
+      const placeMapJson = fs.readJsonSync(filePath);
+      const mapItem =
+        placeMapJson.datas &&
+        placeMapJson.datas.find(
+          (tpl: TplItemType) =>
+            tpl.title === appTemplate || tpl.insidetpl === appTemplate,
+        );
+      if (mapItem) {
+        // todo 提示已经有安装过了，安装地址在。。。，要不要继续安装。
+        console.log('已经安装过了');
+      }
+    }
   }
 
   const pluginPrompts = [
@@ -184,13 +209,16 @@ export default async ({ cwd, args }: { cwd: string; args: IArgs }) => {
   // now husky is not supported in monorepo
   const withHusky = shouldInitGit && !inMonorepo;
 
-  const configTemplateListItem = templateList.find(
-    (tpl) => tpl.title === appTemplate,
+  const configTemplateListItem = allTplList.find(
+    (tpl) => tpl.title === appTemplate || tpl.insidetpl === appTemplate,
   );
-  if (configTemplateListItem) {
+  if (configTemplateListItem.registry) {
     // git template 仓库中， folderPkgName 对应包所在的目录文件名，通常文件名与模版同名，此变量主要用于物理地址处理
-    const { repository: pskyTemplateGit, path: folderPkgName } =
-      configTemplateListItem;
+    const {
+      repository: pskyTemplateGit,
+      path: folderPkgName,
+      branch,
+    }: TplItemType = configTemplateListItem;
     const spinner = ora(`Creating project ${chalk.yellow(appTemplate)}.\n`);
     spinner.start();
 
@@ -212,6 +240,12 @@ export default async ({ cwd, args }: { cwd: string; args: IArgs }) => {
         return;
       } else {
         try {
+          if (branch) {
+            const checkoutBranch = (
+              await $`git checkout ${branch}`
+            ).stdout.trim();
+            console.log('checkoutBranch', checkoutBranch);
+          }
           console.log(chalk.yellow('\nInstalling dependencies...\n'));
           console.log(`\n👉  Get started with the following com1·`);
 
@@ -219,7 +253,10 @@ export default async ({ cwd, args }: { cwd: string; args: IArgs }) => {
 
           fsExtra.remove(gitSourcePath);
           setProjectName({ author, projectName: appName }, `${pkgTargetPath}`);
+
           spinner.stop();
+          savePlaceMapPath(configTemplateListItem, pkgTargetPath);
+          creatProjectConfigFile(pkgTargetPath, configTemplateListItem);
           // install deps
           if (!args.default && args.install !== false) {
             installWithNpmClient({ npmClient, cwd: pkgTargetPath });
@@ -261,6 +298,9 @@ export default async ({ cwd, args }: { cwd: string; args: IArgs }) => {
     questions: args.default ? [] : args.plugin ? pluginPrompts : [],
   });
   await generator.run();
+
+  savePlaceMapPath(configTemplateListItem, target);
+  creatProjectConfigFile(target, configTemplateListItem);
 
   const context: IContext = {
     inMonorepo,
