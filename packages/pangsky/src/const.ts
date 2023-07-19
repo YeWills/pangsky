@@ -1,7 +1,6 @@
-import path from 'path';
+import path, { join } from 'path';
 import fs from 'fs-extra';
 import { homedir } from 'os';
-import { join } from 'path';
 const userHome = homedir();
 
 export const configValues = {
