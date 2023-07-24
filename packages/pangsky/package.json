@@ -26,15 +26,15 @@
     "postinstall": "node ./dist/install.js",
     "test": "psky-scripts jest-turbo",
     "tsc": "tsc",
-    "yalc": "yalc publish",
-    "zx": "4.3.0"
+    "yalc": "yalc publish"
   },
   "dependencies": {
     "@pskyjs/utils": "5.0.1",
     "chalk": "4.1.2",
     "fs-extra": "10.1.0",
     "git-clone": "^0.2.0",
-    "ora": "5.4.1"
+    "ora": "5.4.1",
+    "zx": "4.3.0"
   },
   "publishConfig": {
     "access": "public"
