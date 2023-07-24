@@ -113,6 +113,7 @@ export function getPlaceMapPath(): MapType {
   };
 }
 
+// 将项目安装目录信息同步到映射文件上
 export function savePlaceMapPath(tplInfo: any, usePlacePath: string) {
   const { filePath, parentPath } = getPlaceMapPath();
   const tplInfoWithPlace = { ...tplInfo, usePlacePath };
@@ -157,14 +158,6 @@ export const originTemplateList = [
     title: '简单的react项目示例 react、ts、scss',
     repository: 'https://gitee.com/mayising/psky-template.git',
     path: 'react-simple', //默认是整个根目录
-  },
-];
-
-export const originTemplateList1 = [
-  {
-    title: '简单的react项目示例 react、ts、scss',
-    repository: 'https://gitee.com/mayising/psky-template.git',
-    localpath: 'react-simple', //默认是整个根目录
   },
 ];
 

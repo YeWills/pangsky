@@ -1,14 +1,24 @@
-import { chalk, isLocalDev, yParser } from '@pskyjs/utils';
+import { chalk, isLocalDev, yParser, prompts } from '@pskyjs/utils';
 import path, { join } from 'path';
+import 'zx/globals'; //注意要使用 4.3.0或以下版本，此版本编译后的源码，支持commonjs，高版本是esmodule，无法被 node 14 直接支持运行
 import fs from 'fs-extra';
 import {
   configValues,
+  getStoreMainDir,
+  getPlaceMapPath,
   getConfigJsonPath,
   getTplListJsonPath,
   savePlaceMapPath,
+  TplItemType,
 } from './const';
 
-const cliHanlder = () => {
+const enCopyFile = (prePath: string, targetPath: string) => {
+  if (fs.existsSync(prePath)) {
+    fs.copyFileSync(prePath, targetPath);
+  }
+};
+
+const cliHanlder = async () => {
   const args = yParser(process.argv.slice(2), {
     alias: {
       version: ['v'],
@@ -32,6 +42,7 @@ const cliHanlder = () => {
 
   if (args._[0] === 'config' && args._[1] === 'get') {
     const configJsonPath = getConfigJsonPath();
+    const pskyTplListJsonPath = getTplListJsonPath();
     if (configJsonPath) {
       const pskyConfig = fs.readJsonSync(configJsonPath);
       console.log(
@@ -40,15 +51,11 @@ const cliHanlder = () => {
         }`,
       );
       console.log(
-        `${configValues.pskyTplListJson} location = ${path.join(
-          configJsonPath,
-          configValues.pskyTplListJson,
-        )}`,
+        `${configValues.pskyTplListJson} location = ${pskyTplListJsonPath}`,
       );
       return;
     }
 
-    const pskyTplListJsonPath = getTplListJsonPath();
     console.log(
       `${configValues.pskyTplListJson} location = ${pskyTplListJsonPath}`,
     );
@@ -60,16 +67,67 @@ const cliHanlder = () => {
     const configValue = args._[3];
     const configJsonPath = getConfigJsonPath();
     let pskyConfig: any = {};
+    let validConfigJsonPath = '';
     if (configJsonPath) {
+      validConfigJsonPath = configJsonPath;
       pskyConfig = fs.readJsonSync(configJsonPath);
+    } else {
+      const storeDir = getStoreMainDir();
+      validConfigJsonPath = path.join(storeDir, configValues.pskyConfigJson);
     }
 
     pskyConfig[configKey] = configValue;
-    const data = JSON.stringify(pskyConfig, null, 2);
 
-    fs.writeFile(configJsonPath, data);
+    const data = JSON.stringify(pskyConfig, null, 2);
+    // 设置缓存位置时，将必要的文件复制到新的缓存位置上
+    if (configKey === configValues.storeLocation) {
+      const tpllistPath = getTplListJsonPath();
+      const { filePath } = getPlaceMapPath();
+      enCopyFile(
+        tpllistPath,
+        path.join(configValue, configValues.pskyTplListJson),
+      );
+      enCopyFile(
+        filePath,
+        path.join(configValue, configValues.projectAndUsePlaceMap),
+      );
+    }
+
+    fs.writeFile(validConfigJsonPath, data);
 
     console.log(`success!`);
+    return;
+  }
+
+  if (args._[0] === 'use') {
+    const { filePath } = getPlaceMapPath();
+    if (fs.existsSync(filePath)) {
+      const placeMapJson = fs.readJsonSync(filePath);
+
+      const promptsTplList = placeMapJson.datas.map((t: TplItemType) => ({
+        title: t.title,
+        value: t.insidetpl || t.title,
+      }));
+
+      const response: any = await prompts({
+        type: 'select',
+        name: 'appTemplate',
+        message: 'Pick psk used tpl',
+        choices: promptsTplList,
+        initial: 0,
+      });
+      if (response.appTemplate) {
+        // 迭代 response.appTemplate
+        const selectItem = placeMapJson.datas.find(
+          (t: any) =>
+            t.insidetpl === response.appTemplate ||
+            t.title === response.appTemplate,
+        );
+        console.log('选择的目录是：', selectItem.usePlacePath);
+        $`code ${selectItem.usePlacePath}`;
+      }
+    }
+
     return;
   }
 

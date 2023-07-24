@@ -86,13 +86,17 @@ const allTplList = [
   },
 ];
 
+// { title: 'Simple App', value: 'app' },
+// { title: 'Ant Design Pro', value: 'max' },
+// { title: 'Vue Simple App', value: 'vue-app' },
+
 const promptsTplList = allTplList.map((t: TplItemType) => ({
   title: t.title,
   value: t.insidetpl || t.title,
 }));
 
 export default async ({ cwd, args }: { cwd: string; args: IArgs }) => {
-  const [name, ...cliOpts] = args._;
+  const [name] = args._;
   let npmClient = 'pnpm' as NpmClient;
   let registry = 'https://registry.npmjs.org/';
   let appTemplate = 'app';
@@ -159,8 +163,17 @@ export default async ({ cwd, args }: { cwd: string; args: IArgs }) => {
             tpl.title === appTemplate || tpl.insidetpl === appTemplate,
         );
       if (mapItem) {
-        // todo 提示已经有安装过了，安装地址在。。。，要不要继续安装。
-        console.log('已经安装过了');
+        console.log(`已经安装过了，安装目录： ${mapItem.usePlacePath}`);
+        const isContinueInstall = await prompts({
+          type: 'confirm',
+          name: 'value',
+          message: `已经安装过了,是否要继续安装？目录在${mapItem.usePlacePath}`,
+          initial: false,
+        });
+        if (!isContinueInstall.value) {
+          $`code ${mapItem.usePlacePath}`;
+          return;
+        }
       }
     }
   }
@@ -212,7 +225,7 @@ export default async ({ cwd, args }: { cwd: string; args: IArgs }) => {
   const configTemplateListItem = allTplList.find(
     (tpl) => tpl.title === appTemplate || tpl.insidetpl === appTemplate,
   );
-  if (configTemplateListItem.registry) {
+  if (configTemplateListItem.repository) {
     // git template 仓库中， folderPkgName 对应包所在的目录文件名，通常文件名与模版同名，此变量主要用于物理地址处理
     const {
       repository: pskyTemplateGit,
@@ -232,50 +245,63 @@ export default async ({ cwd, args }: { cwd: string; args: IArgs }) => {
       pkgSourcePath = gitSourcePath;
     }
 
-    gitClone(pskyTemplateGit, gitSourcePath, {}, async (err: string) => {
-      if (err) {
-        spinner.fail();
-        console.log(chalk.red('\nClone template failed'));
-        console.log('\n', err);
-        return;
-      } else {
-        try {
-          if (branch) {
-            const checkoutBranch = (
-              await $`git checkout ${branch}`
-            ).stdout.trim();
-            console.log('checkoutBranch', checkoutBranch);
-          }
-          console.log(chalk.yellow('\nInstalling dependencies...\n'));
-          console.log(`\n👉  Get started with the following com1·`);
+    const cloneOppts: any = {};
+    if (branch) {
+      cloneOppts.checkout = branch;
+    }
 
-          fsExtra.moveSync(pkgSourcePath, pkgTargetPath, { overwrite: true });
+    gitClone(
+      pskyTemplateGit,
+      gitSourcePath,
+      cloneOppts,
+      async (err: string) => {
+        if (err) {
+          spinner.fail();
+          console.log(chalk.red('\nClone template failed'));
+          console.log('\n', err);
+          return;
+        } else {
+          try {
+            // if (branch) {
+            //   const checkoutBranch = (
+            //     await $`git checkout ${branch}`
+            //   ).stdout.trim();
+            //   console.log('checkoutBranch', checkoutBranch);
+            // }
+            console.log(chalk.yellow('\nInstalling dependencies...\n'));
+            console.log(`\n👉  Get started with the following com1·`);
 
-          fsExtra.remove(gitSourcePath);
-          setProjectName({ author, projectName: appName }, `${pkgTargetPath}`);
+            fsExtra.moveSync(pkgSourcePath, pkgTargetPath, { overwrite: true });
 
-          spinner.stop();
-          savePlaceMapPath(configTemplateListItem, pkgTargetPath);
-          creatProjectConfigFile(pkgTargetPath, configTemplateListItem);
-          // install deps
-          if (!args.default && args.install !== false) {
-            installWithNpmClient({ npmClient, cwd: pkgTargetPath });
-          } else {
-            logger.info(`Skip install deps`);
-          }
-
-          console.log(
-            chalk.green(
-              `\n🎉  Successfully created project ${chalk.yellow(name)}.`,
-            ),
-          );
-        } catch (e) {
-          if (name) {
             fsExtra.remove(gitSourcePath);
+            setProjectName(
+              { author, projectName: appName },
+              `${pkgTargetPath}`,
+            );
+
+            spinner.stop();
+            savePlaceMapPath(configTemplateListItem, pkgTargetPath);
+            creatProjectConfigFile(pkgTargetPath, configTemplateListItem);
+            // install deps
+            if (!args.default && args.install !== false) {
+              installWithNpmClient({ npmClient, cwd: pkgTargetPath });
+            } else {
+              logger.info(`Skip install deps`);
+            }
+
+            console.log(
+              chalk.green(
+                `\n🎉  Successfully created project ${chalk.yellow(name)}.`,
+              ),
+            );
+          } catch (e) {
+            if (name) {
+              fsExtra.remove(gitSourcePath);
+            }
           }
         }
-      }
-    });
+      },
+    );
 
     return;
   }
