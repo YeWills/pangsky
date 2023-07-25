@@ -57,7 +57,6 @@
     "regenerator-runtime": "^0.13.9",
     "resolve": "^1.22.0",
     "rimraf": "^3.0.2",
-    "ts-node": "^10.7.0",
     "tsx": "3.9.0",
     "turbo": "1.5.4",
     "typescript": "^4.8.4",
