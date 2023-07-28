@@ -124,7 +124,7 @@ export function setTplJson(tplInfo: any) {
     if (!tplListJson.tplList) {
       tplListJson.tplList = [];
     }
-    const existItemIdx = tplListJson.datas.findIndex((item: any) => {
+    const existItemIdx = tplListJson.tplList.findIndex((item: any) => {
       if (
         item.branch === tplInfo.branch &&
         item.repository === tplInfo.repository &&
