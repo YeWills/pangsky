@@ -113,6 +113,46 @@ export function getPlaceMapPath(): MapType {
   };
 }
 
+// 给tplJson设置值
+export function setTplJson(tplInfo: any) {
+  const pskyTplListJsonPath = getTplListJsonPath();
+
+  const tplInfoWithPlace = { ...tplInfo };
+  let tplListJson: any = {};
+  if (fs.existsSync(pskyTplListJsonPath)) {
+    tplListJson = fs.readJsonSync(pskyTplListJsonPath);
+    if (!tplListJson.tplList) {
+      tplListJson.tplList = [];
+    }
+    const existItemIdx = tplListJson.datas.findIndex((item: any) => {
+      if (
+        item.branch === tplInfo.branch &&
+        item.repository === tplInfo.repository &&
+        item.path === tplInfo.path
+      ) {
+        return true;
+      }
+      return false;
+    });
+
+    if (existItemIdx === -1) {
+      tplListJson.tplList = [...tplListJson.tplList, tplInfoWithPlace];
+    } else {
+      console.log('模版已经存在，不需要重复添加');
+      return;
+    }
+  } else {
+    tplListJson = {
+      tplList: [tplInfoWithPlace],
+    };
+  }
+
+  tplListJson = JSON.stringify(tplListJson, null, 2);
+
+  fs.writeFile(pskyTplListJsonPath, tplListJson);
+  console.log('添加模版成功');
+}
+
 // 将项目安装目录信息同步到映射文件上
 export function savePlaceMapPath(tplInfo: any, usePlacePath: string) {
   const { filePath, parentPath } = getPlaceMapPath();

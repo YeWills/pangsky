@@ -1,4 +1,4 @@
-import { chalk, isLocalDev, yParser, prompts } from '@pskyjs/utils';
+import { chalk, isLocalDev, yParser, prompts, getGitInfo } from '@pskyjs/utils';
 import path, { join } from 'path';
 import 'zx/globals'; //注意要使用 4.3.0或以下版本，此版本编译后的源码，支持commonjs，高版本是esmodule，无法被 node 14 直接支持运行
 import fs from 'fs-extra';
@@ -7,8 +7,10 @@ import {
   getStoreMainDir,
   getPlaceMapPath,
   getConfigJsonPath,
+  setTplJson,
   getTplListJsonPath,
   savePlaceMapPath,
+  creatProjectConfigFile,
   TplItemType,
 } from './const';
 
@@ -28,6 +30,49 @@ const cliHanlder = async () => {
   });
 
   const cmd = process.cwd();
+
+  if (args._[0] === 'add') {
+    const response: any = await prompts([
+      {
+        type: 'text',
+        name: 'tplTitle',
+        message: '请输入模版名',
+      },
+      {
+        type: 'text',
+        name: 'tplbranch',
+        message: '请输入模版所在的branch',
+        initial: undefined,
+      },
+      {
+        type: 'text',
+        name: 'tplpath',
+        message: '请输入模版所在文件目录',
+        initial: undefined,
+      },
+    ]);
+
+    const { gitUrl } = await getGitInfo();
+
+    const tplItem: TplItemType = {
+      title: response.tplTitle,
+      repository: gitUrl,
+    };
+    if (response.tplbranch) {
+      tplItem.branch = response.tplbranch;
+    }
+    if (response.tplpath) {
+      tplItem.path = response.tplpath;
+    }
+
+    // 模版信息保存到模版列表中
+    setTplJson(tplItem);
+    // 更新映射文件
+    savePlaceMapPath(tplItem, cmd);
+    // 创建项目下的psky目录
+    creatProjectConfigFile(cmd, tplItem);
+    return;
+  }
 
   if (args._[0] === 'update') {
     const projectConfigPath = join(
