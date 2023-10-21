@@ -1,4 +1,4 @@
-import * as logger from '@pskyjs/utils/src/logger';
+import * as logger from '@{{pkgName}}js/utils/src/logger';
 import getGitRepoInfo from 'git-repo-info';
 import { join } from 'path';
 import rimraf from 'rimraf';

@@ -2,7 +2,7 @@
 import Logo from './packages/plugin-docs/client/theme-doc/icons/umi.png';
 
 export default {
-  title: 'Psky',
+  title: '{{pkgName}}',
   description: '插件化的企业级前端应用框架',
   logo: Logo,
   github: '',

@@ -1,4 +1,4 @@
-import { yParser } from '@pskyjs/utils';
+import { yParser } from '@{{pkgName}}js/utils';
 
 interface IArgs extends yParser.Arguments {
   default?: boolean;

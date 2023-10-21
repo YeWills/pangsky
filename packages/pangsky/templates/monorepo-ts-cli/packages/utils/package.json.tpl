@@ -1,5 +1,5 @@
 {
-  "name": "@pskyjs/utils",
+  "name": "@{{pkgName}}js/utils",
   "version": "0.0.2",
   "repository": {
     "type": "git",
@@ -13,11 +13,11 @@
     "compiled"
   ],
   "scripts": {
-    "build": "psky-scripts build",
-    "build:deps": "psky-scripts bundleDeps",
+    "build": "{{pkgName}}-scripts build",
+    "build:deps": "{{pkgName}}-scripts bundleDeps",
     "debug": "pnpm run build && yalc publish",
-    "dev": "psky-scripts todo dev",
-    "test": "psky-scripts jest-turbo",
+    "dev": "{{pkgName}}-scripts todo dev",
+    "test": "{{pkgName}}-scripts jest-turbo",
     "tsc": "tsc",
     "yalc": "yalc publish"
   },

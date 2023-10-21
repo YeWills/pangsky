@@ -8,7 +8,7 @@ export const PATHS = {
 } as const;
 
 export const SCRIPTS = {
-  BUNDLE_DEPS: 'psky-scripts bundleDeps',
-  DEV: 'psky-scripts todo dev',
-  BUILD: 'psky-scripts build',
+  BUNDLE_DEPS: '{{pkgName}}-scripts bundleDeps',
+  DEV: '{{pkgName}}-scripts todo dev',
+  BUILD: '{{pkgName}}-scripts build',
 } as const;

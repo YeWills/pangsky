@@ -1,4 +1,4 @@
-import { chalk, isLocalDev, yParser } from '@pskyjs/utils';
+import { chalk, isLocalDev, yParser } from '@{{pkgName}}js/utils';
 
 const args = yParser(process.argv.slice(2), {
   alias: {

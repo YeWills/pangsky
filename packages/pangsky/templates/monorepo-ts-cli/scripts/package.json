@@ -1,8 +1,0 @@
-{
-  "name": "psky-scripts",
-  "version": "1.0.0",
-  "private": true,
-  "bin": {
-    "psky-scripts": "bin/psky-scripts.js"
-  }
-}

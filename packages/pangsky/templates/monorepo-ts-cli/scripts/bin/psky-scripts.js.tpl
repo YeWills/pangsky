@@ -2,8 +2,8 @@
 
 const { join } = require('path')
 const { existsSync } = require('fs')
-const { sync } = require('@pskyjs/utils/compiled/cross-spawn')
-const chalk = require('@pskyjs/utils/compiled/chalk').default
+const { sync } = require('@{{pkgName}}js/utils/compiled/cross-spawn')
+const chalk = require('@{{pkgName}}js/utils/compiled/chalk').default
 const assert = require('assert')
 
 const argv = process.argv.slice(2)
@@ -15,10 +15,10 @@ assert(
   `Executed script '${chalk.red(name)}' does not exist`
 )
 
-console.log(chalk.cyan(`psky-scripts: ${name}\n`))
+console.log(chalk.cyan(`{{pkgName}}-scripts: ${name}\n`))
 
 // for pass all params
-// e.g. psky-scripts bundleDeps --dep chalk
+// e.g. {{pkgName}}-scripts bundleDeps --dep chalk
 //                             ^ pass all => -- --dep chalk
 //      argv.slice(2) <in bundleDeps.ts> : --dep chalk
 if (throughArgs.length) {
@@ -36,6 +36,6 @@ const spawn = sync(
   }
 )
 if (spawn.status !== 0) {
-  console.log(chalk.red(`psky-scripts: ${name} execute fail`))
+  console.log(chalk.red(`{{pkgName}}-scripts: ${name} execute fail`))
   process.exit(1)
 }

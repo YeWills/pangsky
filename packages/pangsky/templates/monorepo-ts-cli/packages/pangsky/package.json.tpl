@@ -1,5 +1,5 @@
 {
-  "name": "psky",
+  "name": "{{pkgName}}",
   "version": "0.0.2",
   "description": "fast create project",
   "repository": {
@@ -10,23 +10,23 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "bin": {
-    "psky": "bin/create-psky.js"
+    "{{pkgName}}": "bin/create-{{pkgName}}.js"
   },
   "files": [
     "dist",
     "templates"
   ],
   "scripts": {
-    "build": "psky-scripts build",
-    "build:deps": "psky-scripts bundleDeps",
+    "build": "{{pkgName}}-scripts build",
+    "build:deps": "{{pkgName}}-scripts bundleDeps",
     "debug": "pnpm run build && yalc publish",
-    "dev": "psky-scripts todo dev",
-    "test": "psky-scripts jest-turbo",
+    "dev": "{{pkgName}}-scripts todo dev",
+    "test": "{{pkgName}}-scripts jest-turbo",
     "tsc": "tsc",
     "yalc": "yalc publish"
   },
   "dependencies": {
-    "@pskyjs/utils": "0.0.2"
+    "@{{pkgName}}js/utils": "0.0.2"
   },
   "publishConfig": {
     "access": "public"
