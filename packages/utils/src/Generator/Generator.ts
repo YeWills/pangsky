@@ -9,6 +9,7 @@ import yParser from '../../compiled/yargs-parser';
 
 interface IOpts {
   baseDir: string;
+  handlePath?: any;
   args: yParser.Arguments;
 }
 
@@ -49,26 +50,51 @@ class Generator {
     writeFileSync(opts.target, content, 'utf-8');
   }
 
-  copyDirectory(opts: { path: string; context: object; target: string }) {
+  copyDirectory(opts: { path: string; context: any; target: string }) {
     const files = glob.sync('**/*', {
       cwd: opts.path,
       dot: true,
       ignore: ['**/node_modules/**'],
     });
+    const handlePath = opts.context.handlePath;
     files.forEach((file: any) => {
       const absFile = join(opts.path, file);
       if (statSync(absFile).isDirectory()) return;
       if (file.endsWith('.tpl')) {
         this.copyTpl({
           templatePath: absFile,
-          target: join(opts.target, file.replace(/\.tpl$/, '')),
+          target: handlePath
+            ? handlePath({
+                file,
+                targetPath: opts.target,
+                context: opts.context,
+              })
+            : join(opts.target, file.replace(/\.tpl$/, '')),
           context: opts.context,
         });
       } else {
         console.log(`${chalk.green('Copy: ')} ${file}`);
         const absTarget = join(opts.target, file);
-        fsExtra.mkdirpSync(dirname(absTarget));
-        copyFileSync(absFile, absTarget);
+        fsExtra.mkdirpSync(
+          handlePath
+            ? handlePath({
+                file,
+                targetPath: opts.target,
+                type: 'dir',
+                context: opts.context,
+              })
+            : dirname(absTarget),
+        );
+        copyFileSync(
+          absFile,
+          handlePath
+            ? handlePath({
+                file,
+                targetPath: opts.target,
+                context: opts.context,
+              })
+            : absTarget,
+        );
       }
     });
   }

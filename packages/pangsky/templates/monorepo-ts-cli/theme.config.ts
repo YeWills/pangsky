@@ -1,10 +1,10 @@
 // @ts-ignore
-import PskyLogo from './packages/plugin-docs/client/theme-doc/icons/umi.png';
+import Logo from './packages/plugin-docs/client/theme-doc/icons/umi.png';
 
 export default {
   title: 'Psky',
   description: '插件化的企业级前端应用框架',
-  logo: PskyLogo,
+  logo: Logo,
   github: '',
   // i18n: [
   //   { locale: 'en-US', text: 'English' },

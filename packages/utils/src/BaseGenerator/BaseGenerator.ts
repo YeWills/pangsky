@@ -9,20 +9,23 @@ interface IOpts {
   target: string;
   baseDir?: string;
   data?: any;
+  handlePath?: any; //自定义修改文件、文件夹的路径
   questions?: prompts.PromptObject[];
 }
 
 export default class BaseGenerator extends Generator {
   path: string;
   target: string;
+  handlePath: any; //自定义修改文件、文件夹的路径
   data: any;
   questions: prompts.PromptObject[];
 
-  constructor({ path, target, data, questions, baseDir }: IOpts) {
+  constructor({ path, target, data, questions, baseDir, handlePath }: IOpts) {
     super({ baseDir: baseDir || target, args: data });
     this.path = path;
     this.target = target;
     this.data = data;
+    this.handlePath = handlePath;
     this.questions = questions || [];
   }
 
@@ -34,6 +37,7 @@ export default class BaseGenerator extends Generator {
     const context = {
       ...this.data,
       ...this.prompts,
+      handlePath: this.handlePath,
     };
     if (statSync(this.path).isDirectory()) {
       this.copyDirectory({

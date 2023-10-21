@@ -79,6 +79,40 @@ const allTplList = [
   {
     title: 'ts monorepo工具库',
     insidetpl: 'monorepo-ts-cli',
+    prompts: [
+      {
+        name: 'pkgName',
+        type: 'text',
+        message: `请输入工程名`,
+        default: 'hellworld',
+      },
+    ],
+    // type 比如 dir 说是生成 文件目录路径
+    // file 'packages/utils/compiled/yargs-parser/index.d.ts'
+    // targetPath '/Users/yewills/Documents/git/pangsky-debug/t1/aa'
+    handlePath: ({ file: originFile, targetPath, type, context }: any) => {
+      // psky-scripts.js
+      // pkgName
+      // packages/pangsky ---> packages/pkgName
+      // 'packages/pangsky/package.json.tpl'  ---> packages/pkgName
+      // scripts/bin/psky-scripts.js     scripts/bin/pkgName-scripts.js
+      // 'packages/pangsky/bin/create-psky.js'   'packages/pangsky/bin/create-psky.js'
+
+      const pkgName = context.pkgName;
+      let file = originFile.replace('pangsky', pkgName);
+      file = file.replace('create-psky', `create-${pkgName}`);
+      file = file.replace('psky-scripts', `${pkgName}-scripts`);
+
+      console.log(file);
+      if (type === 'dir') {
+        const absTarget = join(targetPath, file);
+        return dirname(absTarget);
+      }
+      if (file.endsWith('.tpl')) {
+        return join(targetPath, file.replace(/\.tpl$/, ''));
+      }
+      return join(targetPath, file);
+    },
   },
   {
     title: 'react typescript webpack ui 组件库',
@@ -306,8 +340,15 @@ export default async ({ cwd, args }: { cwd: string; args: IArgs }) => {
     return;
   }
 
+  let questions = args.default ? [] : args.plugin ? pluginPrompts : [];
+
+  if (configTemplateListItem.prompts) {
+    questions = configTemplateListItem.prompts;
+  }
+
   const generator = new BaseGenerator({
     path: join(__dirname, '..', 'templates', templateName),
+    handlePath: configTemplateListItem.handlePath,
     target,
     data: args.default
       ? testData
@@ -321,7 +362,7 @@ export default async ({ cwd, args }: { cwd: string; args: IArgs }) => {
           extraNpmrc:
             npmClient === 'pnpm' ? `strict-peer-dependencies=false` : '',
         } as ITemplateParams),
-    questions: args.default ? [] : args.plugin ? pluginPrompts : [],
+    questions,
   });
   await generator.run();
 

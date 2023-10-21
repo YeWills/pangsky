@@ -2,7 +2,7 @@
   "private": true,
   "author":"{{{ author }}}",
   "scripts": {
-    "build": "psky-scripts turbo build",
+    "build": "{{pkgName}}-scripts turbo build",
     "build:release": "psky-scripts turbo build --no-cache",
     "dev": "psky-scripts turbo dev --parallel",
     "doc": "dumi dev",
