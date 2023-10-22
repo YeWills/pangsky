@@ -2,7 +2,6 @@ node_modules
 dist
 .mfsu
 *.d.ts
-compiled
 *.js
 fixtures
 *.md

@@ -2,8 +2,8 @@
 
 const { join } = require('path')
 const { existsSync } = require('fs')
-const { sync } = require('@{{pkgName}}js/utils/compiled/cross-spawn')
-const chalk = require('@{{pkgName}}js/utils/compiled/chalk').default
+const { sync } = require('cross-spawn')
+const chalk = require('chalk').default
 const assert = require('assert')
 
 const argv = process.argv.slice(2)

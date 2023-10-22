@@ -1,4 +1,4 @@
-import spawn from '@{{pkgName}}js/utils/compiled/cross-spawn';
+import spawn from 'cross-spawn';
 import * as logger from '@{{pkgName}}js/utils/src/logger';
 import type { SpawnSyncOptions } from 'child_process';
 import { existsSync, readdirSync, readFileSync, writeFileSync } from 'fs';
@@ -47,7 +47,7 @@ export function setExcludeFolder(opts: {
   folders?: string[];
 }) {
   const dirName = opts.dirName || 'packages';
-  const folders = opts.folders || ['dist', 'compiled', '.turbo'];
+  const folders = opts.folders || ['dist', '.turbo'];
   if (!existsSync(join(opts.cwd, '.idea'))) return;
   const configPath = join(opts.cwd, '.idea', 'umi.iml');
   let content = readFileSync(configPath, 'utf-8');

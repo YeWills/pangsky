@@ -9,8 +9,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
-    "dist",
-    "compiled"
+    "dist"
   ],
   "scripts": {
     "build": "{{pkgName}}-scripts build",
@@ -38,7 +37,7 @@
     "@types/semver": "7.3.9",
     "address": "1.1.2",
     "axios": "0.27.2",
-    "chalk": "5.0.1",
+    "chalk": "2.4.2",
     "cheerio": "1.0.0-rc.10",
     "color": "4.2.3",
     "cross-spawn": "7.0.3",
@@ -68,56 +67,5 @@
   },
   "authors": [
     "chencheng <sorrycc@gmail.com> (https://github.com/sorrycc)"
-  ],
-  "compiledConfig": {
-    "deps": [
-      "address",
-      "axios",
-      "chalk",
-      "cheerio",
-      "color",
-      "cross-spawn",
-      "debug",
-      "deepmerge",
-      "execa",
-      "glob",
-      "fs-extra",
-      "import-lazy",
-      "lodash",
-      "mustache",
-      "prettier",
-      "pkg-up",
-      "portfinder",
-      "prompts",
-      "rimraf",
-      "resolve",
-      "semver",
-      "strip-ansi",
-      "yargs-parser",
-      "pirates",
-      "@hapi/joi"
-    ],
-    "externals": {
-      "address": "$$LOCAL",
-      "axios": "$$LOCAL",
-      "chalk": "$$LOCAL",
-      "cheerio": "$$LOCAL",
-      "cross-spawn": "$$LOCAL",
-      "debug": "$$LOCAL",
-      "fs-extra": "$$LOCAL",
-      "globby": "$$LOCAL",
-      "import-lazy": "$$LOCAL",
-      "lodash": "$$LOCAL",
-      "mustache": "$$LOCAL",
-      "pkg-up": "$$LOCAL",
-      "portfinder": "$$LOCAL",
-      "rimraf": "$$LOCAL",
-      "resolve": "$$LOCAL",
-      "semver": "$$LOCAL",
-      "strip-ansi": "$$LOCAL",
-      "yargs-parser": "$$LOCAL",
-      "pirates": "$$LOCAL",
-      "@hapi/joi": "$$LOCAL"
-    }
-  }
+  ]
 }

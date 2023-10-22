@@ -1,6 +1,6 @@
 import { join } from 'path';
-import chalk from '../compiled/chalk';
-import fsExtra from '../compiled/fs-extra';
+import chalk from 'chalk';
+import fsExtra from 'fs-extra';
 import { importLazy } from './importLazy';
 
 const enableFSLogger =

@@ -1,5 +1,5 @@
-import chalk from '../compiled/chalk';
-import yParser from '../compiled/yargs-parser';
+import chalk from 'chalk';
+import yParser from 'yargs-parser';
 export * from './isLocalDev';
 
 export { chalk, yParser };
