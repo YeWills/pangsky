@@ -1,6 +1,6 @@
 {
   "name": "psky",
-  "version": "5.0.9-alpha.0",
+  "version": "5.0.9",
   "description": "fast create project",
   "homepage": "https://github.com/YeWills/psky/tree/main/packages/psky#readme",
   "bugs": "https://github.com/YeWills/psky/issues",
@@ -29,7 +29,7 @@
     "yalc": "yalc publish"
   },
   "dependencies": {
-    "@pskyjs/utils": "5.0.9-alpha.0",
+    "@pskyjs/utils": "5.0.9",
     "chalk": "4.1.2",
     "fs-extra": "10.1.0",
     "git-clone": "^0.2.0",
