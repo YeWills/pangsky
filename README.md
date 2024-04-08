@@ -1,14 +1,22 @@
 # psky
-psky，盘古(pangu)开天(sky)，引申为创建、生成之意。
-用于管理和生成各种项目、脚手架、ui组件库模版。
+psky，盘古(pangu)开天(sky)，引申为创建、生成之意。<br>
+目前用于管理和生成项目模版、脚手架模版、ui组件库模版。<br>
+本仓库是一个monorepo仓库，可以很方便的集成更多工具。
+>本仓库是一个企业级的monorepo仓库范例，利用了turbo的缓存编译，让开发编译速度更加快捷。
 
-# 安装与构建
-根目录下执行 pnpm i && pnpm build
+## 两大优点
+相比一般的`create cli`，psky多了两大优点：
+- 集成模版非常方便，可以很方便地集成来自git仓库的模版，和内置模版一起使用。
+- 集成了本地项目管理能力：
+  - psky会记录所有通过psky生成的项目，以便查看；
+  - 通过psky生成的项目，下次要生成相同项目时，会提示是否要打开之前的项目或者继续生成新项目；
+  - 通过这些能力，尤其在做demo测试时，让你不需要重复安装项目，就可快速进行demo测试，同时也让你的工作区干净整洁
 
 ## 使用
 ```s
 npm i psky -g
 psky my-app
+#根据提示选择要使用的模版生成项目
 ```
 
 ## 模版
@@ -19,7 +27,7 @@ psky my-app
 ```s
 psky config get
 ```
-获取模版配置文件`tplList.json`,修改文件如下，即可轻松集成管理自己的模版：
+获取模版配置文件`tplList.json`,修改文件如下，集成管理自己的模版：
 `repository`是模版仓库地址 gitee，因为下载流畅。
 ```json
 {
@@ -44,12 +52,13 @@ psky config get
 }
 ```
 
+## 开发
+### 安装与构建
+根目录下执行 `pnpm i && pnpm build`
 
+### 调试
 
-
-## 调试
-
-### 通过yalc调试
+#### 通过yalc调试
 本项目根目录下执行
 ```s
 pnpm run build
@@ -61,11 +70,12 @@ pnpm run yalc
 mkdir psky-debug
 cd psky-debug
 npm init
-#如果后续 psky @pskyjs/utils 依赖的包增加，就增加安装
-npm i ora@5.4.1 chalk@4.1.2 git-clone@0.2.0
 yalc add psky @pskyjs/utils
 ```
-
+使用过程如果有报错，可能要再安装`psky` `@pskyjs/utils` 依赖的下面两个包：
+```s
+npm i ora@5.4.1 chalk@4.1.2 git-clone@0.2.0
+```
 后续更新时，本项目根目录下执行
 ```s
 pnpm run build
@@ -76,8 +86,8 @@ pnpm run yalc
 yalc update
 ```
 
-调试：
-调试项目下
+
+后续即可进行开发调试了，在调试项目下：
 ```s
 mkdir test
 cd test
@@ -85,7 +95,7 @@ node ../node_modules/psky/bin/create-psky.js
 ```
 
 
-### 通过局部psky命令调试
+#### 通过局部psky命令调试
 在其他任意一个目录下创建调试项目：
 ```s
 mkdir psky-debug
@@ -97,16 +107,10 @@ npx psky
 ```
 
 
-## 发布
+### 发布
+```s
+pnpm run release #正式发布
+```
 ```s
 pnpm run release --soon #快速发布，不提交github
 ```
-
-
-
-
-
-
-
-
-
