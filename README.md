@@ -10,8 +10,18 @@ psky，盘古(pangu)开天(sky)，引申为创建、生成之意。<br>
 开箱即用，工程包含了完整的开发、编译、发布、husky、文档集成。<br>可以轻松集成公司的所有工具包，并且使用统一的命名空间，方便npm包管理。<br>
 同时利用了turbo的缓存编译，让开发编译速度更加快捷。
 
+技术栈：
+- 主体:monorepo + lerna + turbo + pnpm + workspaces + typescript
+- 文档:dumi
+- 调试:yalc
+
+
 ### 企业级ui组件库框架
 开箱即用，工程包含了完整的开发、编译、发布、husky、文档集成、example调试。
+
+技术栈：
+- 主体:typescript + react + webpack5 + pnpm
+- 文档:dumi
 
 ## 两大优点
 相比一般的`create cli`，psky多了两大优点：
