@@ -5,10 +5,12 @@ psky，盘古(pangu)开天(sky)，引申为创建、生成之意。<br>
 >本工程是一个企业级的monorepo工程范例，利用了turbo的缓存编译，让开发编译速度更加快捷, 同时，工程包含了完整的开发、编译、发布、husky、文档集成。
 
 ## 内置模版
+每个公司都需要一个monorepo式的工具库，一个ui组件库。
 ![](./tmp.jpg)
 ### 企业级monorepo工具库
 开箱即用，工程包含了完整的开发、编译、发布、husky、文档集成。<br>可以轻松集成公司的所有工具包，并且使用统一的命名空间，方便npm包管理。<br>
 同时利用了turbo的缓存编译，让开发编译速度更加快捷。
+>这是一套经典的monorepo库范例，借鉴了umi源码和next.js源码
 
 技术栈：
 - 主体:monorepo + lerna + turbo + pnpm + workspaces + typescript
@@ -17,7 +19,10 @@ psky，盘古(pangu)开天(sky)，引申为创建、生成之意。<br>
 
 
 ### 企业级ui组件库框架
-开箱即用，工程包含了完整的开发、编译、发布、husky、文档集成、example调试。
+开箱即用，工程包含了完整的开发、编译、发布、husky、文档集成、example调试。<br>
+ui组件库要解决的难点：
+- 如何生成文档，文档中可以展示demo示例并可查看源码，这里使用了dumi方案；
+- 如何进行example调试，也可以通过文档实现，不过会比较重，这里另写了一套webpack配置用于测试demo，非常轻量便捷
 
 技术栈：
 - 主体:typescript + react + webpack5 + pnpm
