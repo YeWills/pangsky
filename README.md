@@ -10,7 +10,7 @@ psky，盘古(pangu)开天(sky)，引申为创建、生成之意。<br>
 ### 企业级monorepo工具库
 开箱即用，工程包含了完整的开发、编译、发布、husky、文档集成。<br>可以轻松集成公司的所有工具包，并且使用统一的命名空间，方便npm包管理。<br>
 同时利用了turbo的缓存编译，让开发编译速度更加快捷。
->这是一套经典的monorepo库范例，借鉴了umi源码和next.js源码
+>这是一套经典的monorepo库范例，借鉴了umi源码和next.js
 
 技术栈：
 - 主体:monorepo + lerna + turbo + pnpm + workspaces + typescript
