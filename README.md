@@ -23,6 +23,7 @@ psky，盘古(pangu)开天(sky)，引申为创建、生成之意。<br>
 
 ## 使用
 ```s
+#需要切到node 16版本
 npm i psky -g
 psky my-app
 #根据提示选择要使用的模版生成项目
